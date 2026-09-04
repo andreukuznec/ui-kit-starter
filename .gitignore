@@ -3,6 +3,7 @@ dist
 dist-ssr
 coverage
 playwright-report
+storybook-static
 test-results
 *.local
 .env
@@ -15,3 +16,6 @@ Thumbs.db
 !.vscode/extensions.json
 .idea
 eslint-results.json
+
+*storybook.log
+storybook-static
