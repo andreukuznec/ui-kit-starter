@@ -5,12 +5,16 @@ import {
   Bold,
   CalendarIcon,
   Check,
+  CircleAlert,
+  CircleCheck,
   Command as CommandIcon,
   Inbox,
+  Info,
   Monitor,
   Moon,
   MoreHorizontal,
   Sun,
+  TriangleAlert,
 } from "lucide-react"
 import { lazy, Suspense, useEffect, useState } from "react"
 import { useForm } from "react-hook-form"
@@ -25,6 +29,18 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from "@/components/ui/accordion"
+import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert"
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+  AlertDialogTrigger,
+} from "@/components/ui/alert-dialog"
 import { Avatar, AvatarFallback } from "@/components/ui/avatar"
 import { Badge } from "@/components/ui/badge"
 import {
@@ -47,6 +63,7 @@ import {
 } from "@/components/ui/card"
 import { Checkbox } from "@/components/ui/checkbox"
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/components/ui/collapsible"
+import { Combobox } from "@/components/ui/combobox"
 import {
   CommandDialog,
   CommandEmpty,
@@ -56,6 +73,8 @@ import {
   CommandList,
   CommandShortcut,
 } from "@/components/ui/command"
+import { type ColumnDef, DataTable } from "@/components/ui/data-table"
+import { type DateRange, DateRangePicker } from "@/components/ui/date-range-picker"
 import {
   Dialog,
   DialogContent,
@@ -87,14 +106,7 @@ import { HoverCard, HoverCardContent, HoverCardTrigger } from "@/components/ui/h
 import { Input } from "@/components/ui/input"
 import { Kbd } from "@/components/ui/kbd"
 import { Label } from "@/components/ui/label"
-import {
-  Pagination,
-  PaginationContent,
-  PaginationItem,
-  PaginationLink,
-  PaginationNext,
-  PaginationPrevious,
-} from "@/components/ui/pagination"
+import { MultiSelect } from "@/components/ui/multi-select"
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover"
 import { Progress } from "@/components/ui/progress"
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group"
@@ -121,14 +133,6 @@ import { Slider } from "@/components/ui/slider"
 import { Toaster } from "@/components/ui/sonner"
 import { Spinner } from "@/components/ui/spinner"
 import { Switch } from "@/components/ui/switch"
-import {
-  Table,
-  TableBody,
-  TableCell,
-  TableHead,
-  TableHeader,
-  TableRow,
-} from "@/components/ui/table"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { Textarea } from "@/components/ui/textarea"
 import { Toggle } from "@/components/ui/toggle"
@@ -140,12 +144,51 @@ const ChartsCard = lazy(() => import("@/components/charts-card"))
 
 const themeCycle = { dark: "light", light: "system", system: "dark" } as const
 
-const workstreams = [
+type Workstream = {
+  name: string
+  owner: string
+  status: string
+  variant: "default" | "destructive" | "outline" | "secondary"
+}
+
+const workstreams: Workstream[] = [
   { name: "Design tokens", status: "Active", variant: "default", owner: "Ana" },
   { name: "Docs migration", status: "Draft", variant: "secondary", owner: "Marc" },
   { name: "API review", status: "Review", variant: "outline", owner: "Yuki" },
   { name: "Legacy cleanup", status: "Blocked", variant: "destructive", owner: "Sam" },
-] as const
+]
+
+const workstreamColumns: ColumnDef<Workstream>[] = [
+  {
+    accessorKey: "name",
+    header: "Workstream",
+    cell: ({ row }) => <span className="font-medium">{row.getValue("name")}</span>,
+  },
+  {
+    accessorKey: "status",
+    header: "Status",
+    cell: ({ row }) => <Badge variant={row.original.variant}>{row.getValue("status")}</Badge>,
+  },
+  {
+    accessorKey: "owner",
+    header: "Owner",
+    cell: ({ row }) => <div className="text-right">{row.getValue("owner")}</div>,
+  },
+]
+
+const frameworkOptions = [
+  { label: "Vite", value: "vite" },
+  { label: "Next.js", value: "next" },
+  { label: "Remix", value: "remix" },
+  { label: "Astro", value: "astro" },
+]
+
+const tagOptions = [
+  { label: "Design", value: "design" },
+  { label: "Docs", value: "docs" },
+  { label: "API", value: "api" },
+  { label: "A11y", value: "a11y" },
+]
 
 const formSchema = z.object({
   name: z.string().min(3, "Give the project at least 3 characters."),
@@ -160,6 +203,9 @@ function App() {
   const { theme, setTheme } = useTheme()
   const [commandOpen, setCommandOpen] = useState(false)
   const [opacity, setOpacity] = useState(64)
+  const [framework, setFramework] = useState("")
+  const [tags, setTags] = useState<string[]>([])
+  const [sprintRange, setSprintRange] = useState<DateRange | undefined>()
 
   const form = useForm<FormValues>({
     resolver: zodResolver(formSchema),
@@ -370,6 +416,27 @@ function App() {
                     <Badge variant="warning">Degraded</Badge>
                     <Badge variant="info">Notice</Badge>
                   </div>
+                  <div className="space-y-2">
+                    <Alert variant="success">
+                      <CircleCheck aria-hidden="true" />
+                      <AlertTitle>Deploy succeeded</AlertTitle>
+                      <AlertDescription>Status tokens share these surfaces.</AlertDescription>
+                    </Alert>
+                    <Alert variant="warning">
+                      <TriangleAlert aria-hidden="true" />
+                      <AlertTitle>Cache is stale</AlertTitle>
+                      <AlertDescription>
+                        Refresh workstreams to pick up the latest run.
+                      </AlertDescription>
+                    </Alert>
+                    <Alert variant="info">
+                      <Info aria-hidden="true" />
+                      <AlertTitle>New tokens available</AlertTitle>
+                      <AlertDescription>
+                        Info alerts use the same semantic color as badges.
+                      </AlertDescription>
+                    </Alert>
+                  </div>
                 </CardContent>
               </Card>
 
@@ -396,29 +463,29 @@ function App() {
                           </FormItem>
                         )}
                       />
+                      <FormField
+                        control={form.control}
+                        name="stage"
+                        render={({ field }) => (
+                          <FormItem>
+                            <FormLabel>Stage</FormLabel>
+                            <Select onValueChange={field.onChange} value={field.value}>
+                              <FormControl>
+                                <SelectTrigger>
+                                  <SelectValue placeholder="Choose a stage" />
+                                </SelectTrigger>
+                              </FormControl>
+                              <SelectContent>
+                                <SelectItem value="design">Design</SelectItem>
+                                <SelectItem value="build">Build</SelectItem>
+                                <SelectItem value="review">Review</SelectItem>
+                              </SelectContent>
+                            </Select>
+                            <FormMessage />
+                          </FormItem>
+                        )}
+                      />
                       <div className="grid gap-4 sm:grid-cols-2">
-                        <FormField
-                          control={form.control}
-                          name="stage"
-                          render={({ field }) => (
-                            <FormItem>
-                              <FormLabel>Stage</FormLabel>
-                              <Select onValueChange={field.onChange} value={field.value}>
-                                <FormControl>
-                                  <SelectTrigger>
-                                    <SelectValue placeholder="Choose a stage" />
-                                  </SelectTrigger>
-                                </FormControl>
-                                <SelectContent>
-                                  <SelectItem value="design">Design</SelectItem>
-                                  <SelectItem value="build">Build</SelectItem>
-                                  <SelectItem value="review">Review</SelectItem>
-                                </SelectContent>
-                              </Select>
-                              <FormMessage />
-                            </FormItem>
-                          )}
-                        />
                         <FormField
                           control={form.control}
                           name="dueDate"
@@ -452,6 +519,15 @@ function App() {
                             </FormItem>
                           )}
                         />
+                        <div className="space-y-2">
+                          <Label htmlFor="sprint-range">Sprint range</Label>
+                          <DateRangePicker
+                            id="sprint-range"
+                            date={sprintRange}
+                            onDateChange={setSprintRange}
+                            numberOfMonths={1}
+                          />
+                        </div>
                       </div>
                       <FormField
                         control={form.control}
@@ -471,6 +547,33 @@ function App() {
                       </div>
                     </form>
                   </Form>
+                  <div className="mt-6 grid gap-4 border-t pt-4 sm:grid-cols-2">
+                    <div className="space-y-2">
+                      <Label htmlFor="framework">Framework</Label>
+                      <Combobox
+                        id="framework"
+                        options={frameworkOptions}
+                        value={framework}
+                        onValueChange={setFramework}
+                        placeholder="Select a framework"
+                        searchPlaceholder="Search frameworks…"
+                      />
+                    </div>
+                    <div className="space-y-2">
+                      <Label id="tags-label" htmlFor="tags">
+                        Tags
+                      </Label>
+                      <MultiSelect
+                        id="tags"
+                        aria-labelledby="tags-label"
+                        options={tagOptions}
+                        value={tags}
+                        onValueChange={setTags}
+                        placeholder="Select tags"
+                        searchPlaceholder="Search tags…"
+                      />
+                    </div>
+                  </div>
                 </CardContent>
               </Card>
 
@@ -544,6 +647,32 @@ function App() {
                   >
                     <Bell aria-hidden="true" /> Toast
                   </Button>
+                  <AlertDialog>
+                    <AlertDialogTrigger asChild>
+                      <Button variant="outline">
+                        <CircleAlert aria-hidden="true" />
+                        Delete workspace
+                      </Button>
+                    </AlertDialogTrigger>
+                    <AlertDialogContent>
+                      <AlertDialogHeader>
+                        <AlertDialogTitle>Delete this workspace?</AlertDialogTitle>
+                        <AlertDialogDescription>
+                          This action cannot be undone. The workspace and its workstreams will be
+                          removed.
+                        </AlertDialogDescription>
+                      </AlertDialogHeader>
+                      <AlertDialogFooter>
+                        <AlertDialogCancel>Cancel</AlertDialogCancel>
+                        <AlertDialogAction
+                          variant="destructive"
+                          onClick={() => toast.success("Workspace deleted")}
+                        >
+                          Delete
+                        </AlertDialogAction>
+                      </AlertDialogFooter>
+                    </AlertDialogContent>
+                  </AlertDialog>
                 </CardContent>
               </Card>
 
@@ -672,44 +801,7 @@ function App() {
                   <CardDescription>Semantic table primitives with status badges.</CardDescription>
                 </CardHeader>
                 <CardContent>
-                  <Table>
-                    <TableHeader>
-                      <TableRow>
-                        <TableHead>Workstream</TableHead>
-                        <TableHead>Status</TableHead>
-                        <TableHead className="text-right">Owner</TableHead>
-                      </TableRow>
-                    </TableHeader>
-                    <TableBody>
-                      {workstreams.map((row) => (
-                        <TableRow key={row.name}>
-                          <TableCell className="font-medium">{row.name}</TableCell>
-                          <TableCell>
-                            <Badge variant={row.variant}>{row.status}</Badge>
-                          </TableCell>
-                          <TableCell className="text-right">{row.owner}</TableCell>
-                        </TableRow>
-                      ))}
-                    </TableBody>
-                  </Table>
-                  <Pagination className="mt-4">
-                    <PaginationContent>
-                      <PaginationItem>
-                        <PaginationPrevious href="#workstreams" />
-                      </PaginationItem>
-                      <PaginationItem>
-                        <PaginationLink href="#workstreams" isActive>
-                          1
-                        </PaginationLink>
-                      </PaginationItem>
-                      <PaginationItem>
-                        <PaginationLink href="#workstreams">2</PaginationLink>
-                      </PaginationItem>
-                      <PaginationItem>
-                        <PaginationNext href="#workstreams" />
-                      </PaginationItem>
-                    </PaginationContent>
-                  </Pagination>
+                  <DataTable columns={workstreamColumns} data={workstreams} />
                 </CardContent>
               </Card>
             </div>
