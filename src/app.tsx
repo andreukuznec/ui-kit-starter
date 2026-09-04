@@ -2,9 +2,11 @@ import { zodResolver } from "@hookform/resolvers/zod"
 import { format } from "date-fns"
 import {
   Bell,
+  Bold,
   CalendarIcon,
   Check,
   Command as CommandIcon,
+  Inbox,
   Monitor,
   Moon,
   MoreHorizontal,
@@ -23,7 +25,16 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from "@/components/ui/accordion"
+import { Avatar, AvatarFallback } from "@/components/ui/avatar"
 import { Badge } from "@/components/ui/badge"
+import {
+  Breadcrumb,
+  BreadcrumbItem,
+  BreadcrumbLink,
+  BreadcrumbList,
+  BreadcrumbPage,
+  BreadcrumbSeparator,
+} from "@/components/ui/breadcrumb"
 import { Button } from "@/components/ui/button"
 import { Calendar } from "@/components/ui/calendar"
 import {
@@ -34,6 +45,8 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card"
+import { Checkbox } from "@/components/ui/checkbox"
+import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/components/ui/collapsible"
 import {
   CommandDialog,
   CommandEmpty,
@@ -61,6 +74,7 @@ import {
   DropdownMenuShortcut,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
+import { Empty, EmptyDescription, EmptyHeader, EmptyMedia, EmptyTitle } from "@/components/ui/empty"
 import {
   Form,
   FormControl,
@@ -69,8 +83,22 @@ import {
   FormLabel,
   FormMessage,
 } from "@/components/ui/form"
+import { HoverCard, HoverCardContent, HoverCardTrigger } from "@/components/ui/hover-card"
 import { Input } from "@/components/ui/input"
+import { Kbd } from "@/components/ui/kbd"
+import { Label } from "@/components/ui/label"
+import {
+  Pagination,
+  PaginationContent,
+  PaginationItem,
+  PaginationLink,
+  PaginationNext,
+  PaginationPrevious,
+} from "@/components/ui/pagination"
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover"
+import { Progress } from "@/components/ui/progress"
+import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group"
+import { ScrollArea } from "@/components/ui/scroll-area"
 import {
   Select,
   SelectContent,
@@ -89,7 +117,10 @@ import {
 } from "@/components/ui/sheet"
 import { SidebarInset, SidebarProvider, SidebarTrigger } from "@/components/ui/sidebar"
 import { Skeleton } from "@/components/ui/skeleton"
+import { Slider } from "@/components/ui/slider"
 import { Toaster } from "@/components/ui/sonner"
+import { Spinner } from "@/components/ui/spinner"
+import { Switch } from "@/components/ui/switch"
 import {
   Table,
   TableBody,
@@ -98,7 +129,10 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table"
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { Textarea } from "@/components/ui/textarea"
+import { Toggle } from "@/components/ui/toggle"
+import { ToggleGroup, ToggleGroupItem } from "@/components/ui/toggle-group"
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip"
 import { cn } from "@/lib/utils"
 
@@ -125,6 +159,7 @@ type FormValues = z.infer<typeof formSchema>
 function App() {
   const { theme, setTheme } = useTheme()
   const [commandOpen, setCommandOpen] = useState(false)
+  const [opacity, setOpacity] = useState(64)
 
   const form = useForm<FormValues>({
     resolver: zodResolver(formSchema),
@@ -168,7 +203,7 @@ function App() {
                 <Button variant="outline" size="sm" onClick={() => setCommandOpen(true)}>
                   <CommandIcon aria-hidden="true" />
                   Commands
-                  <span className="hidden text-xs text-muted-foreground sm:inline">⌘K</span>
+                  <Kbd className="hidden sm:inline">⌘K</Kbd>
                 </Button>
                 <Tooltip>
                   <TooltipTrigger asChild>
@@ -194,7 +229,18 @@ function App() {
           </header>
 
           <div className="mx-auto max-w-6xl space-y-6 px-4 py-8 sm:px-6">
-            <section className="space-y-2">
+            <section id="showcase" className="space-y-2">
+              <Breadcrumb>
+                <BreadcrumbList>
+                  <BreadcrumbItem>
+                    <BreadcrumbLink href="#showcase">Relay UI</BreadcrumbLink>
+                  </BreadcrumbItem>
+                  <BreadcrumbSeparator />
+                  <BreadcrumbItem>
+                    <BreadcrumbPage>Starter</BreadcrumbPage>
+                  </BreadcrumbItem>
+                </BreadcrumbList>
+              </Breadcrumb>
               <Badge variant="outline">Editable source</Badge>
               <h1 className="text-3xl font-semibold tracking-tight sm:text-4xl">
                 Build with the Relay visual system.
@@ -234,6 +280,97 @@ function App() {
                     View tokens
                   </Button>
                 </CardFooter>
+              </Card>
+
+              <Card>
+                <CardHeader>
+                  <CardTitle>Selection and inputs</CardTitle>
+                  <CardDescription>
+                    Checkboxes, switches, radios, sliders, and toggles share focus rings.
+                  </CardDescription>
+                </CardHeader>
+                <CardContent className="space-y-5">
+                  <div className="flex flex-wrap items-center gap-x-6 gap-y-3">
+                    <div className="flex items-center gap-2">
+                      <Checkbox id="email-digest" defaultChecked />
+                      <Label htmlFor="email-digest">Email digest</Label>
+                    </div>
+                    <div className="flex items-center gap-2">
+                      <Switch id="auto-save" defaultChecked />
+                      <Label htmlFor="auto-save">Auto-save</Label>
+                    </div>
+                  </div>
+                  <RadioGroup
+                    defaultValue="comfortable"
+                    className="flex flex-wrap gap-4"
+                    aria-label="Density"
+                  >
+                    <div className="flex items-center gap-2">
+                      <RadioGroupItem value="comfortable" id="density-comfortable" />
+                      <Label htmlFor="density-comfortable">Comfortable</Label>
+                    </div>
+                    <div className="flex items-center gap-2">
+                      <RadioGroupItem value="compact" id="density-compact" />
+                      <Label htmlFor="density-compact">Compact</Label>
+                    </div>
+                  </RadioGroup>
+                  <div className="space-y-2">
+                    <div className="flex items-center justify-between gap-3 text-sm">
+                      <Label htmlFor="opacity">Opacity</Label>
+                      <span className="text-muted-foreground tabular-nums">{opacity}%</span>
+                    </div>
+                    <Slider
+                      id="opacity"
+                      value={[opacity]}
+                      onValueChange={(value) => setOpacity(value[0] ?? 0)}
+                      max={100}
+                      step={1}
+                      aria-label="Opacity"
+                    />
+                  </div>
+                  <div className="flex flex-wrap items-center gap-3">
+                    <Toggle variant="outline" aria-label="Bold" defaultPressed>
+                      <Bold aria-hidden="true" />
+                    </Toggle>
+                    <ToggleGroup
+                      type="single"
+                      defaultValue="week"
+                      variant="outline"
+                      aria-label="Range"
+                    >
+                      <ToggleGroupItem value="day">Day</ToggleGroupItem>
+                      <ToggleGroupItem value="week">Week</ToggleGroupItem>
+                      <ToggleGroupItem value="month">Month</ToggleGroupItem>
+                    </ToggleGroup>
+                  </div>
+                </CardContent>
+              </Card>
+
+              <Card>
+                <CardHeader>
+                  <CardTitle>Progress and status</CardTitle>
+                  <CardDescription>
+                    Status tokens stay aligned with badges, bars, and loading indicators.
+                  </CardDescription>
+                </CardHeader>
+                <CardContent className="space-y-5">
+                  <div className="space-y-2">
+                    <div className="flex items-center justify-between text-sm">
+                      <span>Sync</span>
+                      <span className="text-muted-foreground tabular-nums">64%</span>
+                    </div>
+                    <Progress value={64} aria-label="Sync progress" />
+                  </div>
+                  <div className="flex items-center gap-2 text-sm text-muted-foreground">
+                    <Spinner />
+                    Refreshing workstreams
+                  </div>
+                  <div className="flex flex-wrap gap-2">
+                    <Badge variant="success">Shipped</Badge>
+                    <Badge variant="warning">Degraded</Badge>
+                    <Badge variant="info">Notice</Badge>
+                  </div>
+                </CardContent>
               </Card>
 
               <Card>
@@ -430,6 +567,28 @@ function App() {
                       </AccordionContent>
                     </AccordionItem>
                   </Accordion>
+                  <Collapsible>
+                    <CollapsibleTrigger className="flex min-h-11 w-full items-center rounded-md px-2 text-left text-xs font-medium text-muted-foreground hover:bg-secondary/45 hover:text-foreground">
+                      When should collapsible be used?
+                    </CollapsibleTrigger>
+                    <CollapsibleContent className="px-2 pb-3 text-sm text-muted-foreground">
+                      Prefer it for a single panel. Accordions group several sections.
+                    </CollapsibleContent>
+                  </Collapsible>
+                  <ScrollArea className="h-24 rounded-md border">
+                    <ul className="space-y-1 p-3 text-sm">
+                      {[
+                        "Color tokens",
+                        "Type scale",
+                        "Spacing",
+                        "Motion",
+                        "Density",
+                        "Elevation",
+                      ].map((item) => (
+                        <li key={item}>{item}</li>
+                      ))}
+                    </ul>
+                  </ScrollArea>
                   <div
                     className="space-y-3 rounded-lg border bg-secondary/25 p-4"
                     role="group"
@@ -460,6 +619,55 @@ function App() {
 
               <Card>
                 <CardHeader>
+                  <CardTitle>Surfaces and empty states</CardTitle>
+                  <CardDescription>
+                    Tabs, avatars, and empty placeholders for secondary views.
+                  </CardDescription>
+                </CardHeader>
+                <CardContent>
+                  <Tabs defaultValue="guidance">
+                    <TabsList aria-label="Starter surfaces">
+                      <TabsTrigger value="guidance">Guidance</TabsTrigger>
+                      <TabsTrigger value="vacant">Vacant</TabsTrigger>
+                    </TabsList>
+                    <TabsContent value="guidance" className="space-y-4 pt-4">
+                      <p className="text-sm text-muted-foreground">
+                        Hover an owner to inspect assignment, then keep scanning the kit.
+                      </p>
+                      <HoverCard>
+                        <HoverCardTrigger
+                          aria-label="Ana profile"
+                          className="inline-flex rounded-full"
+                        >
+                          <Avatar>
+                            <AvatarFallback>AN</AvatarFallback>
+                          </Avatar>
+                        </HoverCardTrigger>
+                        <HoverCardContent className="w-56">
+                          <p className="text-sm font-medium">Ana</p>
+                          <p className="text-sm text-muted-foreground">Owns design tokens.</p>
+                        </HoverCardContent>
+                      </HoverCard>
+                    </TabsContent>
+                    <TabsContent value="vacant" className="pt-2">
+                      <Empty className="border border-dashed p-6 md:p-6">
+                        <EmptyHeader>
+                          <EmptyMedia variant="icon">
+                            <Inbox aria-hidden="true" />
+                          </EmptyMedia>
+                          <EmptyTitle>No activity yet</EmptyTitle>
+                          <EmptyDescription>
+                            New workstreams will land here once the team publishes them.
+                          </EmptyDescription>
+                        </EmptyHeader>
+                      </Empty>
+                    </TabsContent>
+                  </Tabs>
+                </CardContent>
+              </Card>
+
+              <Card id="workstreams">
+                <CardHeader>
                   <CardTitle>Data table</CardTitle>
                   <CardDescription>Semantic table primitives with status badges.</CardDescription>
                 </CardHeader>
@@ -484,6 +692,24 @@ function App() {
                       ))}
                     </TableBody>
                   </Table>
+                  <Pagination className="mt-4">
+                    <PaginationContent>
+                      <PaginationItem>
+                        <PaginationPrevious href="#workstreams" />
+                      </PaginationItem>
+                      <PaginationItem>
+                        <PaginationLink href="#workstreams" isActive>
+                          1
+                        </PaginationLink>
+                      </PaginationItem>
+                      <PaginationItem>
+                        <PaginationLink href="#workstreams">2</PaginationLink>
+                      </PaginationItem>
+                      <PaginationItem>
+                        <PaginationNext href="#workstreams" />
+                      </PaginationItem>
+                    </PaginationContent>
+                  </Pagination>
                 </CardContent>
               </Card>
             </div>

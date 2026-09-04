@@ -24,6 +24,9 @@ describe("App", () => {
       screen.getByRole("heading", { name: /build with the relay visual system/i }),
     ).toBeInTheDocument()
     expect(screen.getByRole("button", { name: /commands/i })).toBeInTheDocument()
+    expect(screen.getByRole("checkbox", { name: "Email digest" })).toBeInTheDocument()
+    expect(screen.getByRole("slider", { name: "Opacity" })).toBeInTheDocument()
+    expect(screen.getByRole("tab", { name: "Guidance" })).toBeInTheDocument()
   })
 
   it("opens the command palette with ctrl+k", async () => {
