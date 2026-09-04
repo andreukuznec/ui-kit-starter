@@ -107,6 +107,14 @@ import { Input } from "@/components/ui/input"
 import { Kbd } from "@/components/ui/kbd"
 import { Label } from "@/components/ui/label"
 import { MultiSelect } from "@/components/ui/multi-select"
+import {
+  Pagination,
+  PaginationContent,
+  PaginationItem,
+  PaginationLink,
+  PaginationNext,
+  PaginationPrevious,
+} from "@/components/ui/pagination"
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover"
 import { Progress } from "@/components/ui/progress"
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group"
@@ -800,8 +808,26 @@ function App() {
                   <CardTitle>Data table</CardTitle>
                   <CardDescription>Semantic table primitives with status badges.</CardDescription>
                 </CardHeader>
-                <CardContent>
+                <CardContent className="space-y-4">
                   <DataTable columns={workstreamColumns} data={workstreams} />
+                  <Pagination>
+                    <PaginationContent>
+                      <PaginationItem>
+                        <PaginationPrevious href="#workstreams" />
+                      </PaginationItem>
+                      <PaginationItem>
+                        <PaginationLink href="#workstreams" isActive>
+                          1
+                        </PaginationLink>
+                      </PaginationItem>
+                      <PaginationItem>
+                        <PaginationLink href="#workstreams">2</PaginationLink>
+                      </PaginationItem>
+                      <PaginationItem>
+                        <PaginationNext href="#workstreams" />
+                      </PaginationItem>
+                    </PaginationContent>
+                  </Pagination>
                 </CardContent>
               </Card>
             </div>
