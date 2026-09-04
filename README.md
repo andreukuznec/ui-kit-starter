@@ -27,8 +27,9 @@ npm test
 npm run test:e2e
 ```
 
-Visual regression snapshots live in `e2e/visual.spec.ts`. They run locally only
-(skip on CI). Regenerate baselines after intentional visual changes:
+Visual regression snapshots live in `e2e/visual.spec.ts-snapshots`. They run on
+Linux (including CI) and are skipped on Windows/macOS. Regenerate baselines on
+Linux after intentional visual changes:
 
 ```bash
 npx playwright test e2e/visual.spec.ts --update-snapshots
@@ -82,27 +83,27 @@ before the bundle loads, so the selected theme does not flash.
 
 ### Token list
 
-| Token | Typical classes |
-| --- | --- |
-| `--background` / `--foreground` | `bg-background` `text-foreground` |
-| `--card` / `--card-foreground` | `bg-card` `text-card-foreground` |
-| `--popover` / `--popover-foreground` | `bg-popover` `text-popover-foreground` |
-| `--primary` / `--primary-foreground` | `bg-primary` `text-primary-foreground` |
-| `--secondary` / `--secondary-foreground` | `bg-secondary` `text-secondary-foreground` |
-| `--muted` / `--muted-foreground` | `bg-muted` `text-muted-foreground` |
-| `--accent` / `--accent-foreground` | `bg-accent` `text-accent-foreground` |
-| `--destructive` / `--destructive-foreground` | `bg-destructive` `text-destructive-foreground` |
-| `--border` | `border-border` |
-| `--input` | `border-input` |
-| `--ring` | `ring-ring` |
-| `--radius` | `rounded-lg` / `rounded-md` / `rounded-sm` |
-| `--chart-1` … `--chart-5` | `bg-chart-1` … `bg-chart-5` |
-| `--sidebar` | `bg-sidebar` |
-| `--sidebar-foreground` | `text-sidebar-foreground` |
+| Token                                                | Typical classes                                        |
+| ---------------------------------------------------- | ------------------------------------------------------ |
+| `--background` / `--foreground`                      | `bg-background` `text-foreground`                      |
+| `--card` / `--card-foreground`                       | `bg-card` `text-card-foreground`                       |
+| `--popover` / `--popover-foreground`                 | `bg-popover` `text-popover-foreground`                 |
+| `--primary` / `--primary-foreground`                 | `bg-primary` `text-primary-foreground`                 |
+| `--secondary` / `--secondary-foreground`             | `bg-secondary` `text-secondary-foreground`             |
+| `--muted` / `--muted-foreground`                     | `bg-muted` `text-muted-foreground`                     |
+| `--accent` / `--accent-foreground`                   | `bg-accent` `text-accent-foreground`                   |
+| `--destructive` / `--destructive-foreground`         | `bg-destructive` `text-destructive-foreground`         |
+| `--border`                                           | `border-border`                                        |
+| `--input`                                            | `border-input`                                         |
+| `--ring`                                             | `ring-ring`                                            |
+| `--radius`                                           | `rounded-lg` / `rounded-md` / `rounded-sm`             |
+| `--chart-1` … `--chart-5`                            | `bg-chart-1` … `bg-chart-5`                            |
+| `--sidebar`                                          | `bg-sidebar`                                           |
+| `--sidebar-foreground`                               | `text-sidebar-foreground`                              |
 | `--sidebar-primary` / `--sidebar-primary-foreground` | `bg-sidebar-primary` `text-sidebar-primary-foreground` |
-| `--sidebar-accent` / `--sidebar-accent-foreground` | `bg-sidebar-accent` `text-sidebar-accent-foreground` |
-| `--sidebar-border` | `border-sidebar-border` |
-| `--sidebar-ring` | `ring-sidebar-ring` |
+| `--sidebar-accent` / `--sidebar-accent-foreground`   | `bg-sidebar-accent` `text-sidebar-accent-foreground`   |
+| `--sidebar-border`                                   | `border-sidebar-border`                                |
+| `--sidebar-ring`                                     | `ring-sidebar-ring`                                    |
 
 Inter Variable is loaded from `@fontsource-variable/inter` and used as the first
 family in the `body` stack.

@@ -2,7 +2,7 @@
   "$schema": "https://ui.shadcn.com/schema/registry-item.json",
   "name": "label",
   "dependencies": [
-    "@radix-ui/react-label",
+    "radix-ui",
     "class-variance-authority",
     "clsx",
     "tailwind-merge"
@@ -13,7 +13,7 @@
   "files": [
     {
       "path": "src/components/ui/label.tsx",
-      "content": "import * as React from \"react\"\nimport * as LabelPrimitive from \"@radix-ui/react-label\"\nimport { cva, type VariantProps } from \"class-variance-authority\"\n\nimport { cn } from \"@/lib/utils\"\n\nconst labelVariants = cva(\n  \"text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70\",\n)\n\nfunction Label({\n  className,\n  ...props\n}: React.ComponentProps<typeof LabelPrimitive.Root> & VariantProps<typeof labelVariants>) {\n  return (\n    <LabelPrimitive.Root\n      data-slot=\"label\"\n      className={cn(labelVariants(), className)}\n      {...props}\n    />\n  )\n}\n\nexport { Label }\n",
+      "content": "import * as React from \"react\"\nimport { Label as LabelPrimitive } from \"radix-ui\"\nimport { cva, type VariantProps } from \"class-variance-authority\"\n\nimport { cn } from \"@/lib/utils\"\n\nconst labelVariants = cva(\n  \"text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70\",\n)\n\nfunction Label({\n  className,\n  ...props\n}: React.ComponentProps<typeof LabelPrimitive.Root> & VariantProps<typeof labelVariants>) {\n  return (\n    <LabelPrimitive.Root\n      data-slot=\"label\"\n      className={cn(labelVariants(), className)}\n      {...props}\n    />\n  )\n}\n\nexport { Label }\n",
       "type": "registry:ui"
     }
   ],

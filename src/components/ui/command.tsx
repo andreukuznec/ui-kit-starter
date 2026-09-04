@@ -1,5 +1,5 @@
 import * as React from "react"
-import { type DialogProps } from "@radix-ui/react-dialog"
+import { Dialog as DialogPrimitive } from "radix-ui"
 import { Command as CommandPrimitive } from "cmdk"
 import { Search } from "lucide-react"
 
@@ -19,7 +19,7 @@ function Command({ className, ...props }: React.ComponentProps<typeof CommandPri
   )
 }
 
-function CommandDialog({ children, ...props }: DialogProps) {
+function CommandDialog({ children, ...props }: React.ComponentProps<typeof DialogPrimitive.Root>) {
   return (
     <Dialog {...props}>
       <DialogContent className="overflow-hidden p-0">

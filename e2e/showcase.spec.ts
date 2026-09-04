@@ -6,9 +6,7 @@ test.describe("showcase", () => {
 
     await page.keyboard.press("Control+k")
     await expect(page.getByRole("dialog")).toBeVisible()
-    await expect(
-      page.getByRole("heading", { name: "Command palette" }),
-    ).toBeAttached()
+    await expect(page.getByRole("heading", { name: "Command palette" })).toBeAttached()
 
     await page.getByRole("option", { name: /toggle theme/i }).click()
     await expect(page.getByRole("dialog")).not.toBeVisible()
@@ -23,7 +21,12 @@ test.describe("showcase", () => {
 
     await page.getByRole("textbox", { name: "Project name" }).fill("Mobile redesign")
     await page.getByRole("button", { name: "Due date" }).click()
-    await page.locator("button[data-day]").nth(14).click()
+    const midMonth = await page.evaluate(() => {
+      const date = new Date()
+      date.setDate(15)
+      return date.toLocaleDateString()
+    })
+    await page.locator(`button[data-day="${midMonth}"]`).click()
     await page.keyboard.press("Escape")
 
     await page.getByRole("button", { name: "Create project" }).click()
