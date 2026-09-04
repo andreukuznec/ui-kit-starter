@@ -1,0 +1,27 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "date-range-picker",
+  "title": "Date range picker",
+  "description": "Popover calendar for selecting a date range.",
+  "dependencies": [
+    "date-fns",
+    "lucide-react",
+    "react-day-picker",
+    "clsx",
+    "tailwind-merge"
+  ],
+  "registryDependencies": [
+    "calendar",
+    "popover",
+    "button",
+    "utils"
+  ],
+  "files": [
+    {
+      "path": "src/components/ui/date-range-picker.tsx",
+      "content": "import { format } from \"date-fns\"\nimport { CalendarIcon } from \"lucide-react\"\nimport { type DateRange } from \"react-day-picker\"\n\nimport { Button } from \"@/components/ui/button\"\nimport { Calendar } from \"@/components/ui/calendar\"\nimport { Popover, PopoverContent, PopoverTrigger } from \"@/components/ui/popover\"\nimport { cn } from \"@/lib/utils\"\n\nexport type DateRangePickerProps = {\n  date?: DateRange\n  onDateChange?: (date: DateRange | undefined) => void\n  placeholder?: string\n  className?: string\n  id?: string\n  disabled?: boolean\n  numberOfMonths?: number\n  \"aria-label\"?: string\n}\n\nfunction DateRangePicker({\n  date,\n  onDateChange,\n  placeholder = \"Pick a date range\",\n  className,\n  id,\n  disabled,\n  numberOfMonths = 2,\n  \"aria-label\": ariaLabel,\n}: DateRangePickerProps) {\n  const formatted =\n    date?.from &&\n    (date.to ? `${format(date.from, \"PP\")} - ${format(date.to, \"PP\")}` : format(date.from, \"PP\"))\n\n  return (\n    <Popover>\n      <PopoverTrigger asChild>\n        <Button\n          id={id}\n          type=\"button\"\n          variant=\"outline\"\n          disabled={disabled}\n          aria-label={ariaLabel}\n          className={cn(\n            \"w-full justify-start text-left font-normal\",\n            !formatted && \"text-muted-foreground\",\n            className,\n          )}\n        >\n          <CalendarIcon aria-hidden=\"true\" />\n          <span className=\"truncate\">{formatted ?? placeholder}</span>\n        </Button>\n      </PopoverTrigger>\n      <PopoverContent className=\"w-auto p-0\" align=\"start\">\n        <Calendar\n          mode=\"range\"\n          selected={date}\n          onSelect={onDateChange}\n          numberOfMonths={numberOfMonths}\n        />\n      </PopoverContent>\n    </Popover>\n  )\n}\n\nexport { DateRangePicker }\nexport type { DateRange }\n",
+      "type": "registry:ui"
+    }
+  ],
+  "type": "registry:ui"
+}

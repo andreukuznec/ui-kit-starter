@@ -1,0 +1,25 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "data-table",
+  "title": "Data table",
+  "description": "Generic sortable, paginated table built on Table primitives and TanStack Table.",
+  "dependencies": [
+    "@tanstack/react-table",
+    "lucide-react",
+    "clsx",
+    "tailwind-merge"
+  ],
+  "registryDependencies": [
+    "table",
+    "button",
+    "utils"
+  ],
+  "files": [
+    {
+      "path": "src/components/ui/data-table.tsx",
+      "content": "import {\n  type ColumnDef,\n  flexRender,\n  getCoreRowModel,\n  getPaginationRowModel,\n  getSortedRowModel,\n  type SortingState,\n  useReactTable,\n} from \"@tanstack/react-table\"\nimport { ArrowUpDown } from \"lucide-react\"\nimport * as React from \"react\"\n\nimport { Button } from \"@/components/ui/button\"\nimport {\n  Table,\n  TableBody,\n  TableCell,\n  TableHead,\n  TableHeader,\n  TableRow,\n} from \"@/components/ui/table\"\nimport { cn } from \"@/lib/utils\"\n\nexport type DataTableProps<TData, TValue> = {\n  columns: ColumnDef<TData, TValue>[]\n  data: TData[]\n  className?: string\n  pageSize?: number\n}\n\nfunction DataTable<TData, TValue>({\n  columns,\n  data,\n  className,\n  pageSize = 10,\n}: DataTableProps<TData, TValue>) {\n  const [sorting, setSorting] = React.useState<SortingState>([])\n\n  const table = useReactTable({\n    columns,\n    data,\n    getCoreRowModel: getCoreRowModel(),\n    getPaginationRowModel: getPaginationRowModel(),\n    getSortedRowModel: getSortedRowModel(),\n    onSortingChange: setSorting,\n    state: { sorting },\n    initialState: { pagination: { pageSize } },\n  })\n\n  return (\n    <div data-slot=\"data-table\" className={cn(\"space-y-4\", className)}>\n      <div className=\"overflow-hidden rounded-md border\">\n        <Table>\n          <TableHeader>\n            {table.getHeaderGroups().map((headerGroup) => (\n              <TableRow key={headerGroup.id}>\n                {headerGroup.headers.map((header) => {\n                  const canSort = header.column.getCanSort()\n                  const content = header.isPlaceholder\n                    ? null\n                    : flexRender(header.column.columnDef.header, header.getContext())\n\n                  return (\n                    <TableHead key={header.id}>\n                      {canSort ? (\n                        <Button\n                          type=\"button\"\n                          variant=\"ghost\"\n                          className=\"-ml-3 h-8\"\n                          onClick={() =>\n                            header.column.toggleSorting(header.column.getIsSorted() === \"asc\")\n                          }\n                        >\n                          {content}\n                          <ArrowUpDown aria-hidden=\"true\" />\n                        </Button>\n                      ) : (\n                        content\n                      )}\n                    </TableHead>\n                  )\n                })}\n              </TableRow>\n            ))}\n          </TableHeader>\n          <TableBody>\n            {table.getRowModel().rows.length ? (\n              table.getRowModel().rows.map((row) => (\n                <TableRow key={row.id} data-state={row.getIsSelected() ? \"selected\" : undefined}>\n                  {row.getVisibleCells().map((cell) => (\n                    <TableCell key={cell.id}>\n                      {flexRender(cell.column.columnDef.cell, cell.getContext())}\n                    </TableCell>\n                  ))}\n                </TableRow>\n              ))\n            ) : (\n              <TableRow>\n                <TableCell colSpan={columns.length} className=\"h-24 text-center\">\n                  No results.\n                </TableCell>\n              </TableRow>\n            )}\n          </TableBody>\n        </Table>\n      </div>\n      <div className=\"flex items-center justify-end gap-2\">\n        <Button\n          type=\"button\"\n          variant=\"outline\"\n          size=\"sm\"\n          onClick={() => table.previousPage()}\n          disabled={!table.getCanPreviousPage()}\n        >\n          Previous\n        </Button>\n        <Button\n          type=\"button\"\n          variant=\"outline\"\n          size=\"sm\"\n          onClick={() => table.nextPage()}\n          disabled={!table.getCanNextPage()}\n        >\n          Next\n        </Button>\n      </div>\n    </div>\n  )\n}\n\nexport { DataTable }\nexport type { ColumnDef }\n",
+      "type": "registry:ui"
+    }
+  ],
+  "type": "registry:ui"
+}

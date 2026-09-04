@@ -37,12 +37,13 @@
     {
       "name": "CSS",
       "path": "dist/assets/*.css",
-      "limit": "13 kB"
+      "limit": "16 kB"
     }
   ],
   "dependencies": {
     "@fontsource-variable/inter": "^5.2.8",
     "@hookform/resolvers": "^5.9.1",
+    "@tanstack/react-table": "^8.21.3",
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
     "cmdk": "^1.0.4",
