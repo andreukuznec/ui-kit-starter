@@ -38,11 +38,13 @@ test.describe("showcase", () => {
     await page.goto("/")
 
     await page.getByRole("link", { name: "Charts" }).click()
-    await expect(page.getByRole("heading", { name: "Charts" })).toBeInViewport()
+    await expect(page).toHaveURL(/#charts$/)
+    await expect(page.locator("#charts")).toBeInViewport()
     await expect(page.getByRole("link", { name: "Charts" })).toHaveAttribute("aria-current", "page")
 
     await page.getByRole("link", { name: "Settings" }).click()
-    await expect(page.getByRole("heading", { name: "Forms and validation" })).toBeInViewport()
+    await expect(page).toHaveURL(/#settings$/)
+    await expect(page.locator("#settings")).toBeInViewport()
     await expect(page.getByRole("link", { name: "Settings" })).toHaveAttribute(
       "aria-current",
       "page",

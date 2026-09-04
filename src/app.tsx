@@ -283,7 +283,7 @@ function App() {
           </header>
 
           <div className="mx-auto max-w-6xl space-y-6 px-4 py-8 sm:px-6">
-            <section id="showcase" className="space-y-2">
+            <section id="showcase" className="scroll-mt-[5.5rem] space-y-2">
               <Breadcrumb>
                 <BreadcrumbList>
                   <BreadcrumbItem>
@@ -448,7 +448,7 @@ function App() {
                 </CardContent>
               </Card>
 
-              <Card id="settings">
+              <Card id="settings" className="scroll-mt-[5.5rem]">
                 <CardHeader>
                   <CardTitle>Forms and validation</CardTitle>
                   <CardDescription>
@@ -686,7 +686,7 @@ function App() {
                 </CardContent>
               </Card>
 
-              <Card id="tokens">
+              <Card id="tokens" className="scroll-mt-[5.5rem]">
                 <CardHeader>
                   <CardTitle>Disclosure and loading</CardTitle>
                   <CardDescription>Calm hierarchy for dense application screens.</CardDescription>
@@ -740,21 +740,23 @@ function App() {
                 </CardContent>
               </Card>
 
-              <Suspense
-                fallback={
-                  <Card>
-                    <CardHeader>
-                      <CardTitle>Charts</CardTitle>
-                      <CardDescription>Loading chart…</CardDescription>
-                    </CardHeader>
-                    <CardContent>
-                      <Skeleton className="h-52 w-full" />
-                    </CardContent>
-                  </Card>
-                }
-              >
-                <ChartsCard />
-              </Suspense>
+              <div id="charts" className="scroll-mt-[5.5rem]">
+                <Suspense
+                  fallback={
+                    <Card>
+                      <CardHeader>
+                        <CardTitle>Charts</CardTitle>
+                        <CardDescription>Loading chart…</CardDescription>
+                      </CardHeader>
+                      <CardContent>
+                        <Skeleton className="h-52 w-full" />
+                      </CardContent>
+                    </Card>
+                  }
+                >
+                  <ChartsCard />
+                </Suspense>
+              </div>
 
               <Card>
                 <CardHeader>

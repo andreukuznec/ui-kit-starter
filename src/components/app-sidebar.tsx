@@ -45,6 +45,9 @@ function ShowcaseNav() {
                 onClick={() => {
                   setActiveHref(item.href)
                   setOpenMobile(false)
+                  requestAnimationFrame(() => {
+                    document.getElementById(item.href.slice(1))?.scrollIntoView({ block: "start" })
+                  })
                 }}
               >
                 <item.icon />
