@@ -54,8 +54,44 @@ if (!Element.prototype.scrollIntoView) {
   Element.prototype.scrollIntoView = () => {}
 }
 
+// Radix and cmdk issue pointer capture calls that jsdom does not implement.
+const capturedPointers = new Map<number, Element>()
+
+if (!Element.prototype.hasPointerCapture) {
+  Element.prototype.hasPointerCapture = function hasPointerCapture(pointerId: number) {
+    return capturedPointers.get(pointerId) === this
+  }
+}
+if (!Element.prototype.setPointerCapture) {
+  Element.prototype.setPointerCapture = function setPointerCapture(pointerId: number) {
+    capturedPointers.set(pointerId, this)
+  }
+}
+if (!Element.prototype.releasePointerCapture) {
+  Element.prototype.releasePointerCapture = function releasePointerCapture(pointerId: number) {
+    if (capturedPointers.get(pointerId) === this) {
+      capturedPointers.delete(pointerId)
+    }
+  }
+}
+
+if (typeof window.PointerEvent === "undefined") {
+  class PointerEventStub extends MouseEvent {
+    pointerId = 1
+    constructor(type: string, params: MouseEventInit = {}) {
+      super(type, params)
+    }
+  }
+  window.PointerEvent = PointerEventStub as typeof PointerEvent
+}
+
 HTMLCanvasElement.prototype.getContext = () => null
 
 afterEach(() => {
+  capturedPointers.clear()
   cleanup()
+  // Radix portals mount on document.body. Presence can leave focus guards
+  // behind in jsdom when close animations never fire.
+  document.body.innerHTML = ""
+  document.body.removeAttribute("style")
 })
