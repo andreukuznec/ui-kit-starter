@@ -8,7 +8,7 @@
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <title>Relay UI Starter</title>
     <script>
-      (function () {
+      ;(function () {
         try {
           var theme = localStorage.getItem("theme")
           if (theme !== "light" && theme !== "dark") theme = "dark"
@@ -17,7 +17,8 @@
           root.classList.add(theme)
           root.style.colorScheme = theme
           var colorMeta = document.querySelector('meta[name="theme-color"]')
-          if (colorMeta) colorMeta.setAttribute("content", theme === "light" ? "#f4f6fa" : "#12131a")
+          if (colorMeta)
+            colorMeta.setAttribute("content", theme === "light" ? "#f4f6fa" : "#12131a")
         } catch (e) {
           document.documentElement.classList.add("dark")
         }

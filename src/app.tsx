@@ -1,9 +1,5 @@
-import { lazy, Suspense, useEffect, useState } from "react"
-import { useForm } from "react-hook-form"
 import { zodResolver } from "@hookform/resolvers/zod"
-import { z } from "zod"
 import { format } from "date-fns"
-import { useTheme } from "@/components/theme-provider"
 import {
   Bell,
   CalendarIcon,
@@ -13,10 +9,13 @@ import {
   MoreHorizontal,
   Sun,
 } from "lucide-react"
+import { lazy, Suspense, useEffect, useState } from "react"
+import { useForm } from "react-hook-form"
 import { toast } from "sonner"
+import { z } from "zod"
 
-import { cn } from "@/lib/utils"
 import { AppSidebar } from "@/components/app-sidebar"
+import { useTheme } from "@/components/theme-provider"
 import {
   Accordion,
   AccordionContent,
@@ -87,9 +86,9 @@ import {
   SheetTitle,
   SheetTrigger,
 } from "@/components/ui/sheet"
+import { SidebarInset, SidebarProvider, SidebarTrigger } from "@/components/ui/sidebar"
 import { Skeleton } from "@/components/ui/skeleton"
 import { Toaster } from "@/components/ui/sonner"
-import { SidebarInset, SidebarProvider, SidebarTrigger } from "@/components/ui/sidebar"
 import {
   Table,
   TableBody,
@@ -100,6 +99,7 @@ import {
 } from "@/components/ui/table"
 import { Textarea } from "@/components/ui/textarea"
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip"
+import { cn } from "@/lib/utils"
 
 const ChartsCard = lazy(() => import("@/components/charts-card"))
 

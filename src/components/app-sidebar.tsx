@@ -1,4 +1,5 @@
 import type { ComponentProps } from "react"
+
 import { BarChart3, LayoutDashboard, Palette, Settings2 } from "lucide-react"
 
 import {

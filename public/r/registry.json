@@ -1,7 +1,7 @@
 {
   "$schema": "https://ui.shadcn.com/schema/registry.json",
   "name": "relay-ui",
-  "homepage": "https://github.com/AndreiKuznetsov/ui-kit-starter",
+  "homepage": "https://github.com/andreukuznec/ui-kit-starter",
   "items": [
     {
       "name": "theme-provider",

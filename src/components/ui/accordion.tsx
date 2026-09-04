@@ -1,6 +1,6 @@
-import * as React from "react"
-import { Accordion as AccordionPrimitive } from "radix-ui"
 import { ChevronDown } from "lucide-react"
+import { Accordion as AccordionPrimitive } from "radix-ui"
+import * as React from "react"
 
 import { cn } from "@/lib/utils"
 
@@ -29,7 +29,7 @@ function AccordionTrigger({
       <AccordionPrimitive.Trigger
         data-slot="accordion-trigger"
         className={cn(
-          "group flex min-h-11 flex-1 items-center gap-2 rounded-md px-2 text-left text-xs font-medium text-muted-foreground transition-colors duration-150 hover:bg-secondary/45 hover:text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring [&[data-state=open]>svg:last-child]:rotate-180",
+          "group flex min-h-11 flex-1 items-center gap-2 rounded-md px-2 text-left text-xs font-medium text-muted-foreground transition-colors duration-150 hover:bg-secondary/45 hover:text-foreground focus-visible:ring-2 focus-visible:ring-ring focus-visible:outline-none [&[data-state=open]>svg:last-child]:rotate-180",
           className,
         )}
         {...props}

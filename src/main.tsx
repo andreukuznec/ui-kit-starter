@@ -3,6 +3,7 @@ import ReactDOM from "react-dom/client"
 import "@fontsource-variable/inter"
 
 import { ThemeProvider } from "@/components/theme-provider"
+
 import App from "./app"
 import "./index.css"
 
