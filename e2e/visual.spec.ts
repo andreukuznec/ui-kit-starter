@@ -12,6 +12,7 @@ test.describe("visual regression", () => {
       await page.reload()
       await expect(page.getByRole("heading", { name: /build with the relay/i })).toBeVisible()
       await expect(page.locator(".recharts-bar-rectangle").first()).toBeVisible()
+      await page.evaluate(() => document.fonts.ready)
       await expect(page).toHaveScreenshot(`showcase-${theme}.png`, {
         fullPage: true,
         animations: "disabled",
