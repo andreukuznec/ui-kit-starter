@@ -22,4 +22,18 @@ export default defineConfig({
     setupFiles: "./src/test/setup.ts",
     exclude: [...configDefaults.exclude, "e2e/**"],
   },
+  build: {
+    rollupOptions: {
+      output: {
+        manualChunks(id) {
+          if (id.includes("node_modules") && /recharts|d3-|victory|lodash/.test(id)) {
+            return "charts"
+          }
+        },
+      },
+    },
+    // The showcase eagerly imports the whole kit on one page; real apps
+    // code-split per route and can lower this back to the default.
+    chunkSizeWarningLimit: 700,
+  },
 })
