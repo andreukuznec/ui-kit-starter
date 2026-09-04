@@ -1,12 +1,20 @@
 import { useEffect, useState } from "react"
+import { useForm } from "react-hook-form"
+import { zodResolver } from "@hookform/resolvers/zod"
+import { z } from "zod"
+import { format } from "date-fns"
+import { Bar, BarChart, CartesianGrid, XAxis } from "recharts"
 import { useTheme } from "@/components/theme-provider"
-import { Bell, Check, Command as CommandIcon, Moon, MoreHorizontal, Sun } from "lucide-react"
+import { Bell, CalendarIcon, Check, Command as CommandIcon, Moon, MoreHorizontal, Sun } from "lucide-react"
 import { toast } from "sonner"
 
+import { cn } from "@/lib/utils"
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion"
 import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
+import { Calendar } from "@/components/ui/calendar"
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card"
+import { ChartContainer, ChartTooltip, ChartTooltipContent, type ChartConfig } from "@/components/ui/chart"
 import {
   CommandDialog,
   CommandEmpty,
@@ -34,8 +42,16 @@ import {
   DropdownMenuShortcut,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
+import {
+  Form,
+  FormControl,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormMessage,
+} from "@/components/ui/form"
 import { Input } from "@/components/ui/input"
-import { Label } from "@/components/ui/label"
+import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 import {
   Sheet,
@@ -48,12 +64,55 @@ import {
 } from "@/components/ui/sheet"
 import { Skeleton } from "@/components/ui/skeleton"
 import { Toaster } from "@/components/ui/sonner"
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from "@/components/ui/table"
 import { Textarea } from "@/components/ui/textarea"
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip"
+
+const chartData = [
+  { month: "Mar", active: 186, churned: 24 },
+  { month: "Apr", active: 214, churned: 18 },
+  { month: "May", active: 237, churned: 21 },
+  { month: "Jun", active: 269, churned: 16 },
+  { month: "Jul", active: 301, churned: 19 },
+  { month: "Aug", active: 348, churned: 14 },
+]
+
+const chartConfig = {
+  active: { label: "Active", color: "var(--chart-1)" },
+  churned: { label: "Churned", color: "var(--chart-5)" },
+} satisfies ChartConfig
+
+const workstreams = [
+  { name: "Design tokens", status: "Active", variant: "default", owner: "Ana" },
+  { name: "Docs migration", status: "Draft", variant: "secondary", owner: "Marc" },
+  { name: "API review", status: "Review", variant: "outline", owner: "Yuki" },
+  { name: "Legacy cleanup", status: "Blocked", variant: "destructive", owner: "Sam" },
+] as const
+
+const formSchema = z.object({
+  name: z.string().min(3, "Give the project at least 3 characters."),
+  stage: z.string(),
+  dueDate: z.date().optional(),
+  note: z.string().optional(),
+})
+
+type FormValues = z.infer<typeof formSchema>
 
 function App() {
   const { theme, setTheme } = useTheme()
   const [commandOpen, setCommandOpen] = useState(false)
+
+  const form = useForm<FormValues>({
+    resolver: zodResolver(formSchema),
+    defaultValues: { name: "", stage: "design", note: "" },
+  })
 
   useEffect(() => {
     const onKeyDown = (event: KeyboardEvent) => {
@@ -66,6 +125,13 @@ function App() {
     document.addEventListener("keydown", onKeyDown, true)
     return () => document.removeEventListener("keydown", onKeyDown, true)
   }, [])
+
+  function onSubmit(values: FormValues) {
+    toast.success("Project created", {
+      description: `${values.name} · ${values.stage}${values.dueDate ? ` · due ${format(values.dueDate, "PP")}` : ""}`,
+    })
+    form.reset({ name: "", stage: values.stage, note: "" })
+  }
 
   return (
     <TooltipProvider>
@@ -137,31 +203,100 @@ function App() {
 
             <Card>
               <CardHeader>
-                <CardTitle>Form controls</CardTitle>
-                <CardDescription>Labels, inputs, selection, and feedback share one rhythm.</CardDescription>
+                <CardTitle>Forms and validation</CardTitle>
+                <CardDescription>React Hook Form and Zod wired into the shared controls.</CardDescription>
               </CardHeader>
-              <CardContent className="space-y-4">
-                <div className="space-y-2">
-                  <Label htmlFor="project-name">Project name</Label>
-                  <Input id="project-name" placeholder="New workspace" />
-                </div>
-                <div className="space-y-2">
-                  <Label htmlFor="project-stage">Stage</Label>
-                  <Select defaultValue="design">
-                    <SelectTrigger id="project-stage">
-                      <SelectValue placeholder="Choose a stage" />
-                    </SelectTrigger>
-                    <SelectContent>
-                      <SelectItem value="design">Design</SelectItem>
-                      <SelectItem value="build">Build</SelectItem>
-                      <SelectItem value="review">Review</SelectItem>
-                    </SelectContent>
-                  </Select>
-                </div>
-                <div className="space-y-2">
-                  <Label htmlFor="project-note">Note</Label>
-                  <Textarea id="project-note" placeholder="What should the team know?" />
-                </div>
+              <CardContent>
+                <Form {...form}>
+                  <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
+                    <FormField
+                      control={form.control}
+                      name="name"
+                      render={({ field }) => (
+                        <FormItem>
+                          <FormLabel>Project name</FormLabel>
+                          <FormControl>
+                            <Input placeholder="New workspace" {...field} />
+                          </FormControl>
+                          <FormMessage />
+                        </FormItem>
+                      )}
+                    />
+                    <div className="grid gap-4 sm:grid-cols-2">
+                      <FormField
+                        control={form.control}
+                        name="stage"
+                        render={({ field }) => (
+                          <FormItem>
+                            <FormLabel>Stage</FormLabel>
+                            <Select onValueChange={field.onChange} value={field.value}>
+                              <FormControl>
+                                <SelectTrigger>
+                                  <SelectValue placeholder="Choose a stage" />
+                                </SelectTrigger>
+                              </FormControl>
+                              <SelectContent>
+                                <SelectItem value="design">Design</SelectItem>
+                                <SelectItem value="build">Build</SelectItem>
+                                <SelectItem value="review">Review</SelectItem>
+                              </SelectContent>
+                            </Select>
+                            <FormMessage />
+                          </FormItem>
+                        )}
+                      />
+                      <FormField
+                        control={form.control}
+                        name="dueDate"
+                        render={({ field }) => (
+                          <FormItem>
+                            <FormLabel>Due date</FormLabel>
+                            <Popover>
+                              <PopoverTrigger asChild>
+                                <FormControl>
+                                  <Button
+                                    variant="outline"
+                                    className={cn(
+                                      "w-full justify-start text-left font-normal",
+                                      !field.value && "text-muted-foreground",
+                                    )}
+                                  >
+                                    <CalendarIcon aria-hidden="true" />
+                                    {field.value ? format(field.value, "PP") : "Pick a date"}
+                                  </Button>
+                                </FormControl>
+                              </PopoverTrigger>
+                              <PopoverContent className="w-auto p-0" align="start">
+                                <Calendar
+                                  mode="single"
+                                  selected={field.value}
+                                  onSelect={field.onChange}
+                                />
+                              </PopoverContent>
+                            </Popover>
+                            <FormMessage />
+                          </FormItem>
+                        )}
+                      />
+                    </div>
+                    <FormField
+                      control={form.control}
+                      name="note"
+                      render={({ field }) => (
+                        <FormItem>
+                          <FormLabel>Note</FormLabel>
+                          <FormControl>
+                            <Textarea placeholder="What should the team know?" {...field} />
+                          </FormControl>
+                          <FormMessage />
+                        </FormItem>
+                      )}
+                    />
+                    <div className="flex justify-end">
+                      <Button type="submit">Create project</Button>
+                    </div>
+                  </form>
+                </Form>
               </CardContent>
             </Card>
 
@@ -236,6 +371,53 @@ function App() {
                   <Skeleton className="h-3 w-full" />
                   <Skeleton className="h-3 w-4/5" />
                 </div>
+              </CardContent>
+            </Card>
+
+            <Card>
+              <CardHeader>
+                <CardTitle>Charts</CardTitle>
+                <CardDescription>Recharts reads the same chart tokens as the rest of the kit.</CardDescription>
+              </CardHeader>
+              <CardContent>
+                <ChartContainer config={chartConfig} className="h-52 w-full">
+                  <BarChart data={chartData} margin={{ left: -16, right: 8, top: 8 }}>
+                    <CartesianGrid vertical={false} />
+                    <XAxis dataKey="month" tickLine={false} axisLine={false} />
+                    <ChartTooltip content={<ChartTooltipContent />} />
+                    <Bar dataKey="active" fill="var(--color-active)" radius={4} />
+                    <Bar dataKey="churned" fill="var(--color-churned)" radius={4} />
+                  </BarChart>
+                </ChartContainer>
+              </CardContent>
+            </Card>
+
+            <Card>
+              <CardHeader>
+                <CardTitle>Data table</CardTitle>
+                <CardDescription>Semantic table primitives with status badges.</CardDescription>
+              </CardHeader>
+              <CardContent>
+                <Table>
+                  <TableHeader>
+                    <TableRow>
+                      <TableHead>Workstream</TableHead>
+                      <TableHead>Status</TableHead>
+                      <TableHead className="text-right">Owner</TableHead>
+                    </TableRow>
+                  </TableHeader>
+                  <TableBody>
+                    {workstreams.map((row) => (
+                      <TableRow key={row.name}>
+                        <TableCell className="font-medium">{row.name}</TableCell>
+                        <TableCell>
+                          <Badge variant={row.variant}>{row.status}</Badge>
+                        </TableCell>
+                        <TableCell className="text-right">{row.owner}</TableCell>
+                      </TableRow>
+                    ))}
+                  </TableBody>
+                </Table>
               </CardContent>
             </Card>
           </div>
