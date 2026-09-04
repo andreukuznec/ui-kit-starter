@@ -17,6 +17,7 @@
     "test:e2e": "playwright test",
     "registry:build": "shadcn build registry.json --output public/r",
     "size": "size-limit",
+    "tokens:check": "node scripts/check-contrast.mjs",
     "prepare": "lefthook install"
   },
   "lint-staged": {

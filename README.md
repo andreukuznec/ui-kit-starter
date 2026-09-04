@@ -77,9 +77,11 @@ design tokens live in `src/index.css`:
 - Colors are OKLCH — edit lightness/chroma directly for predictable results
   across themes.
 
-`ThemeProvider` stores the choice in `localStorage` (`theme`) and sets `light`
-or `dark` on `<html>`. An inline script in `index.html` applies that class
-before the bundle loads, so the selected theme does not flash.
+`ThemeProvider` stores `dark`, `light`, or `system` in `localStorage` (`theme`)
+and sets the resolved `light` or `dark` class on `<html>`. `system` follows
+`prefers-color-scheme`, updates when the OS preference changes, and syncs
+across tabs via `storage` events. An inline script in `index.html` applies the
+resolved class before the bundle loads, so the selected theme does not flash.
 
 ### Token list
 
@@ -93,6 +95,9 @@ before the bundle loads, so the selected theme does not flash.
 | `--muted` / `--muted-foreground`                     | `bg-muted` `text-muted-foreground`                     |
 | `--accent` / `--accent-foreground`                   | `bg-accent` `text-accent-foreground`                   |
 | `--destructive` / `--destructive-foreground`         | `bg-destructive` `text-destructive-foreground`         |
+| `--success` / `--success-foreground`                 | `bg-success` `text-success-foreground`                 |
+| `--warning` / `--warning-foreground`                 | `bg-warning` `text-warning-foreground`                 |
+| `--info` / `--info-foreground`                       | `bg-info` `text-info-foreground`                       |
 | `--border`                                           | `border-border`                                        |
 | `--input`                                            | `border-input`                                         |
 | `--ring`                                             | `ring-ring`                                            |
@@ -104,9 +109,12 @@ before the bundle loads, so the selected theme does not flash.
 | `--sidebar-accent` / `--sidebar-accent-foreground`   | `bg-sidebar-accent` `text-sidebar-accent-foreground`   |
 | `--sidebar-border`                                   | `border-sidebar-border`                                |
 | `--sidebar-ring`                                     | `ring-sidebar-ring`                                    |
+| `--font-mono`                                        | `font-mono`                                            |
+| `--ease-out-expo` / `--ease-in-out-soft`             | `ease-out-expo` `ease-in-out-soft`                     |
+| `--transition-duration-fast` / `-normal` / `-slow`   | `duration-fast` `duration-normal` `duration-slow`      |
 
 Inter Variable is loaded from `@fontsource-variable/inter` and used as the first
-family in the `body` stack.
+family in the `body` stack. `font-mono` uses the system UI monospace stack.
 
 ## Component registry
 
