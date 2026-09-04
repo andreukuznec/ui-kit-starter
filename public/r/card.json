@@ -1,6 +1,8 @@
 {
   "$schema": "https://ui.shadcn.com/schema/registry-item.json",
   "name": "card",
+  "title": "Card",
+  "description": "Content container with header, body, and footer slots.",
   "dependencies": [
     "clsx",
     "tailwind-merge"

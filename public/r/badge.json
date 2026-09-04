@@ -1,6 +1,8 @@
 {
   "$schema": "https://ui.shadcn.com/schema/registry-item.json",
   "name": "badge",
+  "title": "Badge",
+  "description": "Compact label for status, category, or count.",
   "dependencies": [
     "class-variance-authority",
     "clsx",

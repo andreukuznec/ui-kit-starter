@@ -1,6 +1,8 @@
 {
   "$schema": "https://ui.shadcn.com/schema/registry-item.json",
   "name": "command",
+  "title": "Command",
+  "description": "Command palette and searchable list built on cmdk.",
   "dependencies": [
     "cmdk",
     "lucide-react",

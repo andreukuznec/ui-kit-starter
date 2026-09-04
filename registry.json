@@ -4,43 +4,10 @@
   "homepage": "https://github.com/andreukuznec/ui-kit-starter",
   "items": [
     {
-      "name": "theme-provider",
-      "type": "registry:component",
-      "title": "Theme provider",
-      "description": "Dark, light, and system theme context with localStorage persistence, cross-tab sync, and no-FOUC script.",
-      "files": [
-        {
-          "path": "src/components/theme-provider.tsx",
-          "type": "registry:component"
-        }
-      ]
-    },
-    {
-      "name": "use-mobile",
-      "type": "registry:hook",
-      "title": "useIsMobile hook",
-      "files": [
-        {
-          "path": "src/hooks/use-mobile.ts",
-          "type": "registry:hook"
-        }
-      ]
-    },
-    {
-      "name": "utils",
-      "type": "registry:lib",
-      "title": "cn() utility",
-      "dependencies": ["clsx", "tailwind-merge"],
-      "files": [
-        {
-          "path": "src/lib/utils.ts",
-          "type": "registry:lib"
-        }
-      ]
-    },
-    {
       "name": "accordion",
       "type": "registry:ui",
+      "title": "Accordion",
+      "description": "Vertically stacked sections that expand and collapse one panel at a time.",
       "dependencies": ["radix-ui", "clsx", "tailwind-merge", "lucide-react"],
       "registryDependencies": ["utils"],
       "files": [
@@ -81,6 +48,8 @@
     {
       "name": "avatar",
       "type": "registry:ui",
+      "title": "Avatar",
+      "description": "User or entity image with a fallback for missing sources.",
       "dependencies": ["radix-ui", "clsx", "tailwind-merge"],
       "registryDependencies": ["utils"],
       "files": [
@@ -93,6 +62,8 @@
     {
       "name": "badge",
       "type": "registry:ui",
+      "title": "Badge",
+      "description": "Compact label for status, category, or count.",
       "dependencies": ["class-variance-authority", "clsx", "tailwind-merge"],
       "registryDependencies": ["utils"],
       "files": [
@@ -105,6 +76,8 @@
     {
       "name": "breadcrumb",
       "type": "registry:ui",
+      "title": "Breadcrumb",
+      "description": "Hierarchical navigation trail with separators and an ellipsis.",
       "dependencies": ["radix-ui", "lucide-react", "clsx", "tailwind-merge"],
       "registryDependencies": ["utils"],
       "files": [
@@ -117,6 +90,8 @@
     {
       "name": "button",
       "type": "registry:ui",
+      "title": "Button",
+      "description": "Button with size and variant styles, including asChild composition.",
       "dependencies": ["radix-ui", "class-variance-authority", "clsx", "tailwind-merge"],
       "registryDependencies": ["utils"],
       "files": [
@@ -129,6 +104,8 @@
     {
       "name": "calendar",
       "type": "registry:ui",
+      "title": "Calendar",
+      "description": "Month calendar built on react-day-picker.",
       "dependencies": ["react-day-picker", "date-fns", "lucide-react", "clsx", "tailwind-merge"],
       "registryDependencies": ["button", "utils"],
       "files": [
@@ -141,6 +118,8 @@
     {
       "name": "card",
       "type": "registry:ui",
+      "title": "Card",
+      "description": "Content container with header, body, and footer slots.",
       "dependencies": ["clsx", "tailwind-merge"],
       "registryDependencies": ["utils"],
       "files": [
@@ -153,6 +132,8 @@
     {
       "name": "chart",
       "type": "registry:ui",
+      "title": "Chart",
+      "description": "Recharts wrapper with kit theming and tooltip helpers.",
       "dependencies": ["recharts", "clsx", "tailwind-merge"],
       "registryDependencies": ["utils"],
       "files": [
@@ -165,6 +146,8 @@
     {
       "name": "checkbox",
       "type": "registry:ui",
+      "title": "Checkbox",
+      "description": "Checkbox control with checked, unchecked, and indeterminate states.",
       "dependencies": ["radix-ui", "lucide-react", "clsx", "tailwind-merge"],
       "registryDependencies": ["utils"],
       "files": [
@@ -177,6 +160,8 @@
     {
       "name": "collapsible",
       "type": "registry:ui",
+      "title": "Collapsible",
+      "description": "Show and hide a section of content.",
       "dependencies": ["radix-ui"],
       "files": [
         {
@@ -202,6 +187,8 @@
     {
       "name": "command",
       "type": "registry:ui",
+      "title": "Command",
+      "description": "Command palette and searchable list built on cmdk.",
       "dependencies": ["cmdk", "lucide-react", "clsx", "tailwind-merge"],
       "registryDependencies": ["dialog", "utils"],
       "files": [
@@ -242,6 +229,8 @@
     {
       "name": "dialog",
       "type": "registry:ui",
+      "title": "Dialog",
+      "description": "Modal dialog with overlay, focus trap, and close control.",
       "dependencies": ["radix-ui", "lucide-react", "clsx", "tailwind-merge"],
       "registryDependencies": ["utils"],
       "files": [
@@ -254,6 +243,8 @@
     {
       "name": "dropdown-menu",
       "type": "registry:ui",
+      "title": "Dropdown menu",
+      "description": "Contextual menu of actions, checkboxes, and nested items.",
       "dependencies": ["radix-ui", "lucide-react", "clsx", "tailwind-merge"],
       "registryDependencies": ["utils"],
       "files": [
@@ -266,6 +257,8 @@
     {
       "name": "empty",
       "type": "registry:ui",
+      "title": "Empty",
+      "description": "Placeholder for empty lists, search results, or states.",
       "dependencies": ["class-variance-authority", "clsx", "tailwind-merge"],
       "registryDependencies": ["utils"],
       "files": [
@@ -278,6 +271,8 @@
     {
       "name": "form",
       "type": "registry:ui",
+      "title": "Form",
+      "description": "Form primitives wired to react-hook-form and zod.",
       "dependencies": [
         "react-hook-form",
         "@hookform/resolvers",
@@ -297,6 +292,8 @@
     {
       "name": "hover-card",
       "type": "registry:ui",
+      "title": "Hover card",
+      "description": "Preview card shown on hover or focus.",
       "dependencies": ["radix-ui", "clsx", "tailwind-merge"],
       "registryDependencies": ["utils"],
       "files": [
@@ -309,6 +306,8 @@
     {
       "name": "input",
       "type": "registry:ui",
+      "title": "Input",
+      "description": "Single-line text input field.",
       "dependencies": ["clsx", "tailwind-merge"],
       "registryDependencies": ["utils"],
       "files": [
@@ -321,6 +320,8 @@
     {
       "name": "kbd",
       "type": "registry:ui",
+      "title": "Kbd",
+      "description": "Keyboard shortcut glyph.",
       "dependencies": ["clsx", "tailwind-merge"],
       "registryDependencies": ["utils"],
       "files": [
@@ -333,6 +334,8 @@
     {
       "name": "label",
       "type": "registry:ui",
+      "title": "Label",
+      "description": "Accessible form label.",
       "dependencies": ["radix-ui", "class-variance-authority", "clsx", "tailwind-merge"],
       "registryDependencies": ["utils"],
       "files": [
@@ -359,6 +362,8 @@
     {
       "name": "pagination",
       "type": "registry:ui",
+      "title": "Pagination",
+      "description": "Page navigation with previous, next, and page items.",
       "dependencies": ["lucide-react", "clsx", "tailwind-merge"],
       "registryDependencies": ["button", "utils"],
       "files": [
@@ -371,6 +376,8 @@
     {
       "name": "popover",
       "type": "registry:ui",
+      "title": "Popover",
+      "description": "Floating panel anchored to a trigger.",
       "dependencies": ["radix-ui", "clsx", "tailwind-merge"],
       "registryDependencies": ["utils"],
       "files": [
@@ -383,6 +390,8 @@
     {
       "name": "progress",
       "type": "registry:ui",
+      "title": "Progress",
+      "description": "Determinate progress bar.",
       "dependencies": ["radix-ui", "clsx", "tailwind-merge"],
       "registryDependencies": ["utils"],
       "files": [
@@ -395,6 +404,8 @@
     {
       "name": "radio-group",
       "type": "registry:ui",
+      "title": "Radio group",
+      "description": "Set of mutually exclusive radio options.",
       "dependencies": ["radix-ui", "lucide-react", "clsx", "tailwind-merge"],
       "registryDependencies": ["utils"],
       "files": [
@@ -407,6 +418,8 @@
     {
       "name": "scroll-area",
       "type": "registry:ui",
+      "title": "Scroll area",
+      "description": "Scrollable region with styled scrollbars.",
       "dependencies": ["radix-ui", "clsx", "tailwind-merge"],
       "registryDependencies": ["utils"],
       "files": [
@@ -419,6 +432,8 @@
     {
       "name": "select",
       "type": "registry:ui",
+      "title": "Select",
+      "description": "Dropdown select with keyboard navigation.",
       "dependencies": ["radix-ui", "lucide-react", "clsx", "tailwind-merge"],
       "registryDependencies": ["utils"],
       "files": [
@@ -431,6 +446,8 @@
     {
       "name": "separator",
       "type": "registry:ui",
+      "title": "Separator",
+      "description": "Horizontal or vertical divider.",
       "dependencies": ["radix-ui", "clsx", "tailwind-merge"],
       "registryDependencies": ["utils"],
       "files": [
@@ -443,6 +460,8 @@
     {
       "name": "sheet",
       "type": "registry:ui",
+      "title": "Sheet",
+      "description": "Slide-in panel from a screen edge.",
       "dependencies": [
         "radix-ui",
         "class-variance-authority",
@@ -461,6 +480,8 @@
     {
       "name": "sidebar",
       "type": "registry:ui",
+      "title": "Sidebar",
+      "description": "Application sidebar with collapse, mobile sheet, and menu primitives.",
       "dependencies": [
         "radix-ui",
         "class-variance-authority",
@@ -488,6 +509,8 @@
     {
       "name": "skeleton",
       "type": "registry:ui",
+      "title": "Skeleton",
+      "description": "Placeholder pulse for loading content.",
       "dependencies": ["clsx", "tailwind-merge"],
       "registryDependencies": ["utils"],
       "files": [
@@ -500,6 +523,8 @@
     {
       "name": "slider",
       "type": "registry:ui",
+      "title": "Slider",
+      "description": "Range or single-value slider.",
       "dependencies": ["radix-ui", "clsx", "tailwind-merge"],
       "registryDependencies": ["utils"],
       "files": [
@@ -512,6 +537,8 @@
     {
       "name": "sonner",
       "type": "registry:ui",
+      "title": "Sonner",
+      "description": "Toast notifications themed to the kit.",
       "dependencies": ["sonner", "clsx", "tailwind-merge"],
       "registryDependencies": ["theme-provider", "utils"],
       "files": [
@@ -524,6 +551,8 @@
     {
       "name": "spinner",
       "type": "registry:ui",
+      "title": "Spinner",
+      "description": "Loading spinner icon.",
       "dependencies": ["lucide-react", "clsx", "tailwind-merge"],
       "registryDependencies": ["utils"],
       "files": [
@@ -536,6 +565,8 @@
     {
       "name": "switch",
       "type": "registry:ui",
+      "title": "Switch",
+      "description": "On/off toggle switch.",
       "dependencies": ["radix-ui", "clsx", "tailwind-merge"],
       "registryDependencies": ["utils"],
       "files": [
@@ -548,6 +579,8 @@
     {
       "name": "table",
       "type": "registry:ui",
+      "title": "Table",
+      "description": "Semantic table primitives for custom tables.",
       "dependencies": ["clsx", "tailwind-merge"],
       "registryDependencies": ["utils"],
       "files": [
@@ -560,6 +593,8 @@
     {
       "name": "tabs",
       "type": "registry:ui",
+      "title": "Tabs",
+      "description": "Tabbed panels.",
       "dependencies": ["radix-ui", "class-variance-authority", "clsx", "tailwind-merge"],
       "registryDependencies": ["utils"],
       "files": [
@@ -572,6 +607,8 @@
     {
       "name": "textarea",
       "type": "registry:ui",
+      "title": "Textarea",
+      "description": "Multi-line text input.",
       "dependencies": ["clsx", "tailwind-merge"],
       "registryDependencies": ["utils"],
       "files": [
@@ -582,8 +619,22 @@
       ]
     },
     {
+      "name": "theme-provider",
+      "type": "registry:component",
+      "title": "Theme provider",
+      "description": "Dark, light, and system theme context with localStorage persistence, cross-tab sync, and no-FOUC script.",
+      "files": [
+        {
+          "path": "src/components/theme-provider.tsx",
+          "type": "registry:component"
+        }
+      ]
+    },
+    {
       "name": "toggle",
       "type": "registry:ui",
+      "title": "Toggle",
+      "description": "Pressable toggle button.",
       "dependencies": ["radix-ui", "class-variance-authority", "clsx", "tailwind-merge"],
       "registryDependencies": ["utils"],
       "files": [
@@ -596,6 +647,8 @@
     {
       "name": "toggle-group",
       "type": "registry:ui",
+      "title": "Toggle group",
+      "description": "Group of related toggle buttons.",
       "dependencies": ["radix-ui", "class-variance-authority", "clsx", "tailwind-merge"],
       "registryDependencies": ["toggle", "utils"],
       "files": [
@@ -608,12 +661,39 @@
     {
       "name": "tooltip",
       "type": "registry:ui",
+      "title": "Tooltip",
+      "description": "Short label shown on hover or focus.",
       "dependencies": ["radix-ui", "clsx", "tailwind-merge"],
       "registryDependencies": ["utils"],
       "files": [
         {
           "path": "src/components/ui/tooltip.tsx",
           "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "use-mobile",
+      "type": "registry:hook",
+      "title": "useIsMobile hook",
+      "description": "Viewport hook that reports whether the layout is below 768px.",
+      "files": [
+        {
+          "path": "src/hooks/use-mobile.ts",
+          "type": "registry:hook"
+        }
+      ]
+    },
+    {
+      "name": "utils",
+      "type": "registry:lib",
+      "title": "cn() utility",
+      "description": "cn() helper that merges class names with clsx and tailwind-merge.",
+      "dependencies": ["clsx", "tailwind-merge"],
+      "files": [
+        {
+          "path": "src/lib/utils.ts",
+          "type": "registry:lib"
         }
       ]
     }

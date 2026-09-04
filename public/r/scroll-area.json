@@ -1,6 +1,8 @@
 {
   "$schema": "https://ui.shadcn.com/schema/registry-item.json",
   "name": "scroll-area",
+  "title": "Scroll area",
+  "description": "Scrollable region with styled scrollbars.",
   "dependencies": [
     "radix-ui",
     "clsx",

@@ -1,6 +1,8 @@
 {
   "$schema": "https://ui.shadcn.com/schema/registry-item.json",
   "name": "accordion",
+  "title": "Accordion",
+  "description": "Vertically stacked sections that expand and collapse one panel at a time.",
   "dependencies": [
     "radix-ui",
     "clsx",

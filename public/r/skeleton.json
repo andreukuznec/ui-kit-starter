@@ -1,6 +1,8 @@
 {
   "$schema": "https://ui.shadcn.com/schema/registry-item.json",
   "name": "skeleton",
+  "title": "Skeleton",
+  "description": "Placeholder pulse for loading content.",
   "dependencies": [
     "clsx",
     "tailwind-merge"

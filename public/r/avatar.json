@@ -1,6 +1,8 @@
 {
   "$schema": "https://ui.shadcn.com/schema/registry-item.json",
   "name": "avatar",
+  "title": "Avatar",
+  "description": "User or entity image with a fallback for missing sources.",
   "dependencies": [
     "radix-ui",
     "clsx",

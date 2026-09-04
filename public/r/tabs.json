@@ -1,6 +1,8 @@
 {
   "$schema": "https://ui.shadcn.com/schema/registry-item.json",
   "name": "tabs",
+  "title": "Tabs",
+  "description": "Tabbed panels.",
   "dependencies": [
     "radix-ui",
     "class-variance-authority",

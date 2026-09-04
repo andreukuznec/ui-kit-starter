@@ -1,6 +1,8 @@
 {
   "$schema": "https://ui.shadcn.com/schema/registry-item.json",
   "name": "dropdown-menu",
+  "title": "Dropdown menu",
+  "description": "Contextual menu of actions, checkboxes, and nested items.",
   "dependencies": [
     "radix-ui",
     "lucide-react",

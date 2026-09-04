@@ -1,6 +1,8 @@
 {
   "$schema": "https://ui.shadcn.com/schema/registry-item.json",
   "name": "toggle-group",
+  "title": "Toggle group",
+  "description": "Group of related toggle buttons.",
   "dependencies": [
     "radix-ui",
     "class-variance-authority",

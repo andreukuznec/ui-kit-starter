@@ -1,6 +1,8 @@
 {
   "$schema": "https://ui.shadcn.com/schema/registry-item.json",
   "name": "form",
+  "title": "Form",
+  "description": "Form primitives wired to react-hook-form and zod.",
   "dependencies": [
     "react-hook-form",
     "@hookform/resolvers",

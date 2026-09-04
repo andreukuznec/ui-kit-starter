@@ -1,6 +1,8 @@
 {
   "$schema": "https://ui.shadcn.com/schema/registry-item.json",
   "name": "pagination",
+  "title": "Pagination",
+  "description": "Page navigation with previous, next, and page items.",
   "dependencies": [
     "lucide-react",
     "clsx",

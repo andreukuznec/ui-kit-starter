@@ -1,6 +1,8 @@
 {
   "$schema": "https://ui.shadcn.com/schema/registry-item.json",
   "name": "button",
+  "title": "Button",
+  "description": "Button with size and variant styles, including asChild composition.",
   "dependencies": [
     "radix-ui",
     "class-variance-authority",

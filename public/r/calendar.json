@@ -1,6 +1,8 @@
 {
   "$schema": "https://ui.shadcn.com/schema/registry-item.json",
   "name": "calendar",
+  "title": "Calendar",
+  "description": "Month calendar built on react-day-picker.",
   "dependencies": [
     "react-day-picker",
     "date-fns",

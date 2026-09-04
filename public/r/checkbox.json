@@ -1,6 +1,8 @@
 {
   "$schema": "https://ui.shadcn.com/schema/registry-item.json",
   "name": "checkbox",
+  "title": "Checkbox",
+  "description": "Checkbox control with checked, unchecked, and indeterminate states.",
   "dependencies": [
     "radix-ui",
     "lucide-react",

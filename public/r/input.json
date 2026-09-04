@@ -1,6 +1,8 @@
 {
   "$schema": "https://ui.shadcn.com/schema/registry-item.json",
   "name": "input",
+  "title": "Input",
+  "description": "Single-line text input field.",
   "dependencies": [
     "clsx",
     "tailwind-merge"

@@ -1,6 +1,8 @@
 {
   "$schema": "https://ui.shadcn.com/schema/registry-item.json",
   "name": "sidebar",
+  "title": "Sidebar",
+  "description": "Application sidebar with collapse, mobile sheet, and menu primitives.",
   "dependencies": [
     "radix-ui",
     "class-variance-authority",

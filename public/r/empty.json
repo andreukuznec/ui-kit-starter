@@ -1,6 +1,8 @@
 {
   "$schema": "https://ui.shadcn.com/schema/registry-item.json",
   "name": "empty",
+  "title": "Empty",
+  "description": "Placeholder for empty lists, search results, or states.",
   "dependencies": [
     "class-variance-authority",
     "clsx",

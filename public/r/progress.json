@@ -1,6 +1,8 @@
 {
   "$schema": "https://ui.shadcn.com/schema/registry-item.json",
   "name": "progress",
+  "title": "Progress",
+  "description": "Determinate progress bar.",
   "dependencies": [
     "radix-ui",
     "clsx",

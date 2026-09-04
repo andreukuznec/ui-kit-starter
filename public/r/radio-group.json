@@ -1,6 +1,8 @@
 {
   "$schema": "https://ui.shadcn.com/schema/registry-item.json",
   "name": "radio-group",
+  "title": "Radio group",
+  "description": "Set of mutually exclusive radio options.",
   "dependencies": [
     "radix-ui",
     "lucide-react",

@@ -1,6 +1,8 @@
 {
   "$schema": "https://ui.shadcn.com/schema/registry-item.json",
   "name": "dialog",
+  "title": "Dialog",
+  "description": "Modal dialog with overlay, focus trap, and close control.",
   "dependencies": [
     "radix-ui",
     "lucide-react",

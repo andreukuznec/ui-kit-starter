@@ -1,6 +1,8 @@
 {
   "$schema": "https://ui.shadcn.com/schema/registry-item.json",
   "name": "spinner",
+  "title": "Spinner",
+  "description": "Loading spinner icon.",
   "dependencies": [
     "lucide-react",
     "clsx",

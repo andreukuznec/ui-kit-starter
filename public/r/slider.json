@@ -1,6 +1,8 @@
 {
   "$schema": "https://ui.shadcn.com/schema/registry-item.json",
   "name": "slider",
+  "title": "Slider",
+  "description": "Range or single-value slider.",
   "dependencies": [
     "radix-ui",
     "clsx",

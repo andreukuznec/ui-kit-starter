@@ -1,6 +1,8 @@
 {
   "$schema": "https://ui.shadcn.com/schema/registry-item.json",
   "name": "tooltip",
+  "title": "Tooltip",
+  "description": "Short label shown on hover or focus.",
   "dependencies": [
     "radix-ui",
     "clsx",

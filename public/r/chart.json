@@ -1,6 +1,8 @@
 {
   "$schema": "https://ui.shadcn.com/schema/registry-item.json",
   "name": "chart",
+  "title": "Chart",
+  "description": "Recharts wrapper with kit theming and tooltip helpers.",
   "dependencies": [
     "recharts",
     "clsx",

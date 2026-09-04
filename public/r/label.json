@@ -1,6 +1,8 @@
 {
   "$schema": "https://ui.shadcn.com/schema/registry-item.json",
   "name": "label",
+  "title": "Label",
+  "description": "Accessible form label.",
   "dependencies": [
     "radix-ui",
     "class-variance-authority",

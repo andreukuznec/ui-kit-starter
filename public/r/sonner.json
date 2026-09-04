@@ -1,6 +1,8 @@
 {
   "$schema": "https://ui.shadcn.com/schema/registry-item.json",
   "name": "sonner",
+  "title": "Sonner",
+  "description": "Toast notifications themed to the kit.",
   "dependencies": [
     "sonner",
     "clsx",

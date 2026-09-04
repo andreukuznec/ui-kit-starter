@@ -1,6 +1,8 @@
 {
   "$schema": "https://ui.shadcn.com/schema/registry-item.json",
   "name": "hover-card",
+  "title": "Hover card",
+  "description": "Preview card shown on hover or focus.",
   "dependencies": [
     "radix-ui",
     "clsx",

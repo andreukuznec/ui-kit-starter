@@ -2,6 +2,7 @@
   "$schema": "https://ui.shadcn.com/schema/registry-item.json",
   "name": "use-mobile",
   "title": "useIsMobile hook",
+  "description": "Viewport hook that reports whether the layout is below 768px.",
   "files": [
     {
       "path": "src/hooks/use-mobile.ts",

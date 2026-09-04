@@ -1,6 +1,8 @@
 {
   "$schema": "https://ui.shadcn.com/schema/registry-item.json",
   "name": "popover",
+  "title": "Popover",
+  "description": "Floating panel anchored to a trigger.",
   "dependencies": [
     "radix-ui",
     "clsx",
