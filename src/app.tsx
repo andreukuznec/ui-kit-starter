@@ -1,5 +1,5 @@
-import { useState } from "react"
-import { useTheme } from "next-themes"
+import { useEffect, useState } from "react"
+import { useTheme } from "@/components/theme-provider"
 import { Bell, Check, Command as CommandIcon, Moon, MoreHorizontal, Sun } from "lucide-react"
 import { toast } from "sonner"
 
@@ -54,6 +54,18 @@ import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/comp
 function App() {
   const { theme, setTheme } = useTheme()
   const [commandOpen, setCommandOpen] = useState(false)
+
+  useEffect(() => {
+    const onKeyDown = (event: KeyboardEvent) => {
+      if ((event.metaKey || event.ctrlKey) && event.key.toLowerCase() === "k") {
+        event.preventDefault()
+        setCommandOpen((open) => !open)
+      }
+    }
+
+    document.addEventListener("keydown", onKeyDown, true)
+    return () => document.removeEventListener("keydown", onKeyDown, true)
+  }, [])
 
   return (
     <TooltipProvider>
@@ -235,7 +247,16 @@ function App() {
             <CommandEmpty>No commands found.</CommandEmpty>
             <CommandGroup heading="Starter">
               <CommandItem onSelect={() => setCommandOpen(false)}><Check aria-hidden="true" />Create project<CommandShortcut>⌘N</CommandShortcut></CommandItem>
-              <CommandItem onSelect={() => setTheme(theme === "dark" ? "light" : "dark")}><Sun aria-hidden="true" />Toggle theme<CommandShortcut>⌘T</CommandShortcut></CommandItem>
+              <CommandItem
+                onSelect={() => {
+                  setCommandOpen(false)
+                  setTheme(theme === "dark" ? "light" : "dark")
+                }}
+              >
+                <Sun aria-hidden="true" />
+                Toggle theme
+                <CommandShortcut>⌘T</CommandShortcut>
+              </CommandItem>
             </CommandGroup>
           </CommandList>
         </CommandDialog>

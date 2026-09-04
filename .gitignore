@@ -1,6 +1,7 @@
 node_modules
 dist
 dist-ssr
+coverage
 *.local
 .env
 .env.*
@@ -11,3 +12,4 @@ Thumbs.db
 .vscode/*
 !.vscode/extensions.json
 .idea
+eslint-results.json
