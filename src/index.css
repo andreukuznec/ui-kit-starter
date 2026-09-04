@@ -1,79 +1,141 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@import "tailwindcss";
+@import "tw-animate-css";
 
-@layer base {
-  :root {
-    color-scheme: dark;
-    --background: 228 10% 8%;
-    --foreground: 220 18% 91%;
-    --card: 225 9% 12%;
-    --card-foreground: 220 18% 91%;
-    --popover: 225 10% 13%;
-    --popover-foreground: 220 18% 91%;
-    --primary: 252 82% 68%;
-    --primary-foreground: 240 20% 98%;
-    --secondary: 225 8% 17%;
-    --secondary-foreground: 220 14% 88%;
-    --muted: 225 8% 16%;
-    --muted-foreground: 222 8% 57%;
-    --accent: 252 28% 20%;
-    --accent-foreground: 252 92% 84%;
-    --destructive: 0 68% 55%;
-    --destructive-foreground: 0 0% 100%;
-    --border: 225 8% 20%;
-    --input: 225 8% 22%;
-    --ring: 252 82% 68%;
-    --chart-1: 252 82% 68%;
-    --chart-2: 160 62% 48%;
-    --chart-3: 38 92% 58%;
-    --chart-4: 200 78% 56%;
-    --chart-5: 350 78% 62%;
-    --radius: 0.5rem;
-    --sidebar: 228 11% 7%;
-    --sidebar-foreground: 220 14% 84%;
-    --sidebar-primary: 252 82% 68%;
-    --sidebar-primary-foreground: 240 20% 98%;
-    --sidebar-accent: 225 9% 14%;
-    --sidebar-accent-foreground: 220 18% 94%;
-    --sidebar-border: 225 8% 17%;
-    --sidebar-ring: 252 82% 68%;
+@custom-variant dark (&:where(.dark, .dark *));
+
+:root {
+  color-scheme: dark;
+  --radius: 0.5rem;
+  --background: oklch(0.1881 0.0067 274.57);
+  --foreground: oklch(0.9265 0.008 264.52);
+  --card: oklch(0.232 0.0082 271.05);
+  --card-foreground: oklch(0.9265 0.008 264.52);
+  --popover: oklch(0.2418 0.0098 270.99);
+  --popover-foreground: oklch(0.9265 0.008 264.52);
+  --primary: oklch(0.6187 0.1929 288.67);
+  --primary-foreground: oklch(0.9823 0.0027 286.35);
+  --secondary: oklch(0.2838 0.0098 271.06);
+  --secondary-foreground: oklch(0.903 0.0084 264.52);
+  --muted: oklch(0.2738 0.0093 271.06);
+  --muted-foreground: oklch(0.6459 0.0193 267.22);
+  --accent: oklch(0.284 0.0518 291.95);
+  --accent-foreground: oklch(0.799 0.1059 293.02);
+  --destructive: oklch(0.5958 0.1932 25.25);
+  --destructive-foreground: oklch(1 0 0);
+  --border: oklch(0.3134 0.0113 271.04);
+  --input: oklch(0.3328 0.0122 271.03);
+  --ring: oklch(0.6187 0.1929 288.67);
+  --chart-1: oklch(0.6187 0.1929 288.67);
+  --chart-2: oklch(0.7385 0.1437 165.12);
+  --chart-3: oklch(0.801 0.1543 75.7);
+  --chart-4: oklch(0.7057 0.1319 235.34);
+  --chart-5: oklch(0.6503 0.1862 14.14);
+  --sidebar: oklch(0.1767 0.0066 274.55);
+  --sidebar-foreground: oklch(0.8701 0.0113 264.51);
+  --sidebar-primary: oklch(0.6187 0.1929 288.67);
+  --sidebar-primary-foreground: oklch(0.9823 0.0027 286.35);
+  --sidebar-accent: oklch(0.2527 0.0094 271.03);
+  --sidebar-accent-foreground: oklch(0.9511 0.0053 264.53);
+  --sidebar-border: oklch(0.2838 0.0098 271.06);
+  --sidebar-ring: oklch(0.6187 0.1929 288.67);
+}
+
+.light {
+  color-scheme: light;
+  --background: oklch(0.9837 0.0019 264.55);
+  --foreground: oklch(0.238 0.0158 270.67);
+  --card: oklch(1 0 0);
+  --card-foreground: oklch(0.238 0.0158 270.67);
+  --popover: oklch(1 0 0);
+  --popover-foreground: oklch(0.238 0.0158 270.67);
+  --primary: oklch(0.5084 0.2242 284.25);
+  --primary-foreground: oklch(1 0 0);
+  --secondary: oklch(0.9515 0.0047 264.54);
+  --secondary-foreground: oklch(0.3079 0.0199 270.69);
+  --muted: oklch(0.9515 0.0047 264.54);
+  --muted-foreground: oklch(0.5431 0.0205 264.39);
+  --accent: oklch(0.9332 0.027 295.04);
+  --accent-foreground: oklch(0.3677 0.1338 287.06);
+  --destructive: oklch(0.5786 0.2137 27.17);
+  --destructive-foreground: oklch(1 0 0);
+  --border: oklch(0.903 0.0084 264.52);
+  --input: oklch(0.8701 0.0113 264.51);
+  --ring: oklch(0.5084 0.2242 284.25);
+  --chart-1: oklch(0.5084 0.2242 284.25);
+  --chart-2: oklch(0.5699 0.0987 167.11);
+  --chart-3: oklch(0.7001 0.1434 73.38);
+  --chart-4: oklch(0.5762 0.1096 235.64);
+  --chart-5: oklch(0.552 0.1932 17.84);
+  --sidebar: oklch(0.9755 0.0029 264.54);
+  --sidebar-foreground: oklch(0.3079 0.0199 270.69);
+  --sidebar-primary: oklch(0.5084 0.2242 284.25);
+  --sidebar-primary-foreground: oklch(1 0 0);
+  --sidebar-accent: oklch(0.9515 0.0047 264.54);
+  --sidebar-accent-foreground: oklch(0.238 0.0158 270.67);
+  --sidebar-border: oklch(0.903 0.0084 264.52);
+  --sidebar-ring: oklch(0.5084 0.2242 284.25);
+}
+
+@theme inline {
+  --font-sans: "Inter Variable", Inter, ui-sans-serif, system-ui, -apple-system,
+    BlinkMacSystemFont, "Segoe UI", sans-serif;
+
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-destructive-foreground: var(--destructive-foreground);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+  --color-chart-1: var(--chart-1);
+  --color-chart-2: var(--chart-2);
+  --color-chart-3: var(--chart-3);
+  --color-chart-4: var(--chart-4);
+  --color-chart-5: var(--chart-5);
+  --color-sidebar: var(--sidebar);
+  --color-sidebar-foreground: var(--sidebar-foreground);
+  --color-sidebar-primary: var(--sidebar-primary);
+  --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
+  --color-sidebar-accent: var(--sidebar-accent);
+  --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
+  --color-sidebar-border: var(--sidebar-border);
+  --color-sidebar-ring: var(--sidebar-ring);
+
+  --radius-sm: calc(var(--radius) - 4px);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) + 4px);
+
+  --animate-accordion-down: accordion-down 0.2s ease-out;
+  --animate-accordion-up: accordion-up 0.2s ease-out;
+
+  @keyframes accordion-down {
+    from {
+      height: 0;
+    }
+    to {
+      height: var(--radix-accordion-content-height);
+    }
   }
-
-  .light {
-    color-scheme: light;
-    --background: 220 20% 98%;
-    --foreground: 225 16% 13%;
-    --card: 0 0% 100%;
-    --card-foreground: 225 16% 13%;
-    --popover: 0 0% 100%;
-    --popover-foreground: 225 16% 13%;
-    --primary: 252 70% 56%;
-    --primary-foreground: 0 0% 100%;
-    --secondary: 220 16% 94%;
-    --secondary-foreground: 225 14% 20%;
-    --muted: 220 16% 94%;
-    --muted-foreground: 220 8% 45%;
-    --accent: 252 65% 94%;
-    --accent-foreground: 252 48% 34%;
-    --destructive: 0 72% 51%;
-    --destructive-foreground: 0 0% 100%;
-    --border: 220 14% 88%;
-    --input: 220 14% 84%;
-    --ring: 252 70% 56%;
-    --chart-1: 252 70% 56%;
-    --chart-2: 160 50% 36%;
-    --chart-3: 38 80% 46%;
-    --chart-4: 200 65% 42%;
-    --chart-5: 350 65% 48%;
-    --sidebar: 220 20% 97%;
-    --sidebar-foreground: 225 14% 20%;
-    --sidebar-primary: 252 70% 56%;
-    --sidebar-primary-foreground: 0 0% 100%;
-    --sidebar-accent: 220 16% 94%;
-    --sidebar-accent-foreground: 225 16% 13%;
-    --sidebar-border: 220 14% 88%;
-    --sidebar-ring: 252 70% 56%;
+  @keyframes accordion-up {
+    from {
+      height: var(--radix-accordion-content-height);
+    }
+    to {
+      height: 0;
+    }
   }
 }
 
@@ -89,10 +151,8 @@
   }
 
   body {
-    @apply bg-background text-foreground antialiased;
+    @apply bg-background font-sans text-foreground antialiased;
     margin: 0;
-    font-family: "Inter Variable", Inter, ui-sans-serif, system-ui, -apple-system,
-      BlinkMacSystemFont, "Segoe UI", sans-serif;
     font-feature-settings: "cv02", "cv03", "cv04", "cv11";
   }
 
@@ -106,7 +166,7 @@
   }
 
   * {
-    scrollbar-color: hsl(var(--border)) transparent;
+    scrollbar-color: var(--border) transparent;
     scrollbar-width: thin;
   }
 
@@ -118,7 +178,7 @@
   *::-webkit-scrollbar-thumb {
     border: 2px solid transparent;
     border-radius: 999px;
-    background: hsl(var(--border));
+    background: var(--border);
     background-clip: padding-box;
   }
 

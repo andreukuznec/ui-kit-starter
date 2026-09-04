@@ -17,5 +17,5 @@
     "noFallthroughCasesInSwitch": true,
     "types": ["node"]
   },
-  "include": ["vite.config.ts", "tailwind.config.ts", "tailwindcss-animate.d.ts"]
+  "include": ["vite.config.ts", "playwright.config.ts"]
 }
