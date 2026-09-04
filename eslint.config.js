@@ -4,11 +4,12 @@ import jsxA11y from "eslint-plugin-jsx-a11y"
 import perfectionist from "eslint-plugin-perfectionist"
 import reactHooks from "eslint-plugin-react-hooks"
 import reactRefresh from "eslint-plugin-react-refresh"
+import storybook from "eslint-plugin-storybook"
 import globals from "globals"
 import tseslint from "typescript-eslint"
 
 export default tseslint.config(
-  { ignores: ["dist", "node_modules", "playwright-report", "test-results"] },
+  { ignores: ["dist", "node_modules", "playwright-report", "storybook-static", "test-results"] },
   {
     extends: [
       js.configs.recommended,
@@ -50,7 +51,7 @@ export default tseslint.config(
     },
   },
   {
-    files: ["src/components/ui/**/*.{ts,tsx}"],
+    files: ["src/components/ui/**/*.{ts,tsx}", ".storybook/**/*.{ts,tsx}"],
     rules: {
       "react-refresh/only-export-components": "off",
     },
@@ -94,5 +95,6 @@ export default tseslint.config(
       ],
     },
   },
+  ...storybook.configs["flat/recommended"],
   eslintConfigPrettier,
 )

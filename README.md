@@ -132,6 +132,24 @@ directly:
 npx shadcn@latest add https://your-host/r/button.json
 ```
 
+## Storybook
+
+Isolated stories for every kit component, with a dark/light theme toolbar and
+the a11y addon:
+
+```bash
+npm run storybook
+```
+
+Static build:
+
+```bash
+npm run build-storybook
+```
+
+Stories are colocated as `*.stories.tsx` next to each component. They compose
+kit primitives only — they do not import the showcase app.
+
 ## Portability
 
 The components target React and Tailwind CSS. The CSS variables are portable to
@@ -139,5 +157,5 @@ other web stacks, but Radix component implementations must be adapted outside
 React.
 
 This starter intentionally excludes Relay API code, authentication, workspace
-branding, board behavior, drag-and-drop, React Query, Storybook, and publishing
+branding, board behavior, drag-and-drop, React Query, and publishing
 infrastructure.
