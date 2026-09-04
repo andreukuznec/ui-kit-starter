@@ -7,7 +7,7 @@
       "name": "theme-provider",
       "type": "registry:component",
       "title": "Theme provider",
-      "description": "Dark/light theme context with localStorage persistence and no-FOUC script.",
+      "description": "Dark, light, and system theme context with localStorage persistence, cross-tab sync, and no-FOUC script.",
       "files": [{ "path": "src/components/theme-provider.tsx", "type": "registry:component" }]
     },
     {

@@ -5,6 +5,7 @@ import {
   CalendarIcon,
   Check,
   Command as CommandIcon,
+  Monitor,
   Moon,
   MoreHorizontal,
   Sun,
@@ -103,6 +104,8 @@ import { cn } from "@/lib/utils"
 
 const ChartsCard = lazy(() => import("@/components/charts-card"))
 
+const themeCycle = { dark: "light", light: "system", system: "dark" } as const
+
 const workstreams = [
   { name: "Design tokens", status: "Active", variant: "default", owner: "Ana" },
   { name: "Docs migration", status: "Draft", variant: "secondary", owner: "Marc" },
@@ -172,10 +175,16 @@ function App() {
                     <Button
                       variant="ghost"
                       size="icon"
-                      aria-label={`Switch to ${theme === "dark" ? "light" : "dark"} theme`}
-                      onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
+                      aria-label={`Theme: ${theme} (click to switch)`}
+                      onClick={() => setTheme(themeCycle[theme])}
                     >
-                      {theme === "dark" ? <Sun aria-hidden="true" /> : <Moon aria-hidden="true" />}
+                      {theme === "light" ? (
+                        <Sun aria-hidden="true" />
+                      ) : theme === "system" ? (
+                        <Monitor aria-hidden="true" />
+                      ) : (
+                        <Moon aria-hidden="true" />
+                      )}
                     </Button>
                   </TooltipTrigger>
                   <TooltipContent>Toggle theme</TooltipContent>

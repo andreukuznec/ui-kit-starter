@@ -3,12 +3,15 @@ import {
   type ReactNode,
   useCallback,
   useContext,
+  useEffect,
   useLayoutEffect,
   useMemo,
   useState,
 } from "react"
 
-export type Theme = "dark" | "light"
+export type Theme = "dark" | "light" | "system"
+
+type ResolvedTheme = "dark" | "light"
 
 type ThemeContextValue = {
   theme: Theme
@@ -16,10 +19,11 @@ type ThemeContextValue = {
 }
 
 const STORAGE_KEY = "theme"
+const LIGHT_QUERY = "(prefers-color-scheme: light)"
 const ThemeContext = createContext<ThemeContextValue | null>(null)
 
 function isTheme(value: string | null): value is Theme {
-  return value === "dark" || value === "light"
+  return value === "dark" || value === "light" || value === "system"
 }
 
 function readStoredTheme(): Theme {
@@ -32,14 +36,20 @@ function readStoredTheme(): Theme {
   }
 }
 
+function resolveTheme(theme: Theme): ResolvedTheme {
+  if (theme !== "system") return theme
+  return window.matchMedia(LIGHT_QUERY).matches ? "light" : "dark"
+}
+
 function applyTheme(theme: Theme) {
+  const resolved = resolveTheme(theme)
   const root = document.documentElement
   root.classList.remove("light", "dark")
-  root.classList.add(theme)
-  root.style.colorScheme = theme
+  root.classList.add(resolved)
+  root.style.colorScheme = resolved
   const colorMeta = document.querySelector('meta[name="theme-color"]')
   if (colorMeta) {
-    colorMeta.setAttribute("content", theme === "light" ? "#f4f6fa" : "#12131a")
+    colorMeta.setAttribute("content", resolved === "light" ? "#f4f6fa" : "#12131a")
   }
 }
 
@@ -58,6 +68,24 @@ export function ThemeProvider({ children }: { children: ReactNode }) {
   useLayoutEffect(() => {
     applyTheme(theme)
   }, [theme])
+
+  useEffect(() => {
+    const media = window.matchMedia(LIGHT_QUERY)
+    const onPreferenceChange = () => {
+      if (theme === "system") applyTheme("system")
+    }
+    media.addEventListener("change", onPreferenceChange)
+    return () => media.removeEventListener("change", onPreferenceChange)
+  }, [theme])
+
+  useEffect(() => {
+    const onStorage = (event: StorageEvent) => {
+      if (event.key !== STORAGE_KEY) return
+      setThemeState(isTheme(event.newValue) ? event.newValue : "dark")
+    }
+    window.addEventListener("storage", onStorage)
+    return () => window.removeEventListener("storage", onStorage)
+  }, [])
 
   const value = useMemo(() => ({ theme, setTheme }), [theme, setTheme])
 
