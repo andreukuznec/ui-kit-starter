@@ -3,6 +3,9 @@
 A minimal React starter containing Relay's editable shadcn-style components,
 semantic CSS tokens, dark and light themes, and a component showcase.
 
+Built with Vite 7, React 19, Tailwind CSS 4 (CSS-first config, OKLCH tokens),
+Radix primitives, and the React Compiler.
+
 ## Run it
 
 ```bash
@@ -16,11 +19,19 @@ Production check:
 npm run build
 ```
 
-Lint and tests:
+Lint, unit tests (jsdom + axe), and e2e (Playwright):
 
 ```bash
 npm run lint
 npm test
+npm run test:e2e
+```
+
+Visual regression snapshots live in `e2e/visual.spec.ts`. They run locally only
+(skip on CI). Regenerate baselines after intentional visual changes:
+
+```bash
+npx playwright test e2e/visual.spec.ts --update-snapshots
 ```
 
 ## Use a component
@@ -36,6 +47,11 @@ export function SaveButton() {
 Components live in `src/components/ui` and are meant to be edited with the
 application. The `@` alias points to `src`.
 
+Included: accordion, badge, button, calendar, card, chart, command, dialog,
+dropdown-menu, form (react-hook-form + zod), input, label, popover, select,
+separator, sheet, sidebar, skeleton, sonner, table, textarea, tooltip — plus
+`ThemeProvider` (`src/components/theme-provider.tsx`) and the `use-mobile` hook.
+
 ## Add a shadcn component
 
 `components.json` is the shadcn CLI config for this Vite app (`rsc: false`).
@@ -45,21 +61,24 @@ From the project root:
 npx shadcn@latest add checkbox
 ```
 
-The CLI writes into `src/components/ui` using the aliases in `components.json`.
-Edit the generated file like any other application source.
+The CLI writes into `src/components/ui` using the aliases in `components.json`
+and the `paths` mapping in `tsconfig.json`. Edit the generated file like any
+other application source.
 
 ## Customize the UI
 
-Change the semantic variables in `src/index.css` to update colors, radius,
-surfaces, charts, and sidebar styling across every component. Keep semantic
-classes such as `bg-background`, `text-foreground`, and `border-border` in
-feature code so themes remain consistent.
+There is no `tailwind.config.*` — Tailwind CSS 4 is configured in CSS. All
+design tokens live in `src/index.css`:
 
-`:root` holds the dark tokens (default). The `.light` block overrides them for
-the light theme. `ThemeProvider` in `src/components/theme-provider.tsx` stores
-the choice in `localStorage` (`theme`) and sets `light` or `dark` on `<html>`.
-An inline script in `index.html` applies that class before the bundle loads so
-the selected theme does not flash.
+- `:root` holds the dark theme (default), `.light` overrides it.
+- `@theme inline` maps the semantic variables to Tailwind utilities
+  (`bg-primary`, `text-muted-foreground`, `rounded-md`, …).
+- Colors are OKLCH — edit lightness/chroma directly for predictable results
+  across themes.
+
+`ThemeProvider` stores the choice in `localStorage` (`theme`) and sets `light`
+or `dark` on `<html>`. An inline script in `index.html` applies that class
+before the bundle loads, so the selected theme does not flash.
 
 ### Token list
 
@@ -87,6 +106,22 @@ the selected theme does not flash.
 
 Inter Variable is loaded from `@fontsource-variable/inter` and used as the first
 family in the `body` stack.
+
+## Component registry
+
+`registry.json` describes every component in the shadcn registry format. Build
+distributable JSON (into `public/r`) with:
+
+```bash
+npm run registry:build
+```
+
+Serve the app (or just `public/r`) over HTTP and others can install components
+directly:
+
+```bash
+npx shadcn@latest add https://your-host/r/button.json
+```
 
 ## Portability
 

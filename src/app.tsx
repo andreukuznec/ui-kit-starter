@@ -366,7 +366,7 @@ function App() {
                     <AccordionContent>Yes. They are application source, following the shadcn ownership model.</AccordionContent>
                   </AccordionItem>
                 </Accordion>
-                <div className="space-y-3 rounded-lg border bg-secondary/25 p-4" aria-label="Loading preview">
+                <div className="space-y-3 rounded-lg border bg-secondary/25 p-4" role="group" aria-label="Loading preview">
                   <Skeleton className="h-4 w-1/3" />
                   <Skeleton className="h-3 w-full" />
                   <Skeleton className="h-3 w-4/5" />
