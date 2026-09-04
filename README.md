@@ -4,7 +4,7 @@ A minimal React starter containing Relay's editable shadcn-style components,
 semantic CSS tokens, dark and light themes, and a component showcase.
 
 Built with Vite 7, React 19, Tailwind CSS 4 (CSS-first config, OKLCH tokens),
-Radix primitives, and the React Compiler.
+Radix primitives (`radix-ui` meta-package), and the React Compiler.
 
 ## Run it
 
@@ -48,10 +48,14 @@ export function SaveButton() {
 Components live in `src/components/ui` and are meant to be edited with the
 application. The `@` alias points to `src`.
 
-Included: accordion, badge, button, calendar, card, chart, command, dialog,
-dropdown-menu, form (react-hook-form + zod), input, label, popover, select,
-separator, sheet, sidebar, skeleton, sonner, table, textarea, tooltip — plus
-`ThemeProvider` (`src/components/theme-provider.tsx`) and the `use-mobile` hook.
+Included: accordion, alert, alert-dialog, avatar, badge, breadcrumb, button,
+calendar, card, chart, checkbox, collapsible, combobox, command, data-table,
+date-range-picker, dialog, dropdown-menu, empty, form (react-hook-form + zod),
+hover-card, input, kbd, label, multi-select, pagination, popover, progress,
+radio-group, scroll-area, select, separator, sheet, sidebar, skeleton, slider,
+sonner, spinner, switch, table, tabs, textarea, toggle, toggle-group, tooltip —
+plus `ThemeProvider` (`src/components/theme-provider.tsx`) and the `use-mobile`
+hook.
 
 ## Add a shadcn component
 
@@ -83,6 +87,23 @@ and sets the resolved `light` or `dark` class on `<html>`. `system` follows
 across tabs via `storage` events. An inline script in `index.html` applies the
 resolved class before the bundle loads, so the selected theme does not flash.
 
+To add a brand palette, override the same CSS variables under a class or
+`[data-theme="brand"]` selector (on `<html>` or a subtree). `ThemeProvider`
+still toggles only `.light` / `.dark`; your selector can combine with those:
+
+```css
+[data-theme="brand"] {
+  --primary: oklch(0.55 0.18 250);
+  --primary-foreground: oklch(1 0 0);
+}
+
+[data-theme="brand"].light {
+  --primary: oklch(0.48 0.2 250);
+}
+```
+
+Set `data-theme="brand"` yourself (or swap the values in `:root` / `.light`).
+
 ### Token list
 
 | Token                                                | Typical classes                                        |
@@ -109,12 +130,14 @@ resolved class before the bundle loads, so the selected theme does not flash.
 | `--sidebar-accent` / `--sidebar-accent-foreground`   | `bg-sidebar-accent` `text-sidebar-accent-foreground`   |
 | `--sidebar-border`                                   | `border-sidebar-border`                                |
 | `--sidebar-ring`                                     | `ring-sidebar-ring`                                    |
+| `--font-sans`                                        | `font-sans`                                            |
 | `--font-mono`                                        | `font-mono`                                            |
 | `--ease-out-expo` / `--ease-in-out-soft`             | `ease-out-expo` `ease-in-out-soft`                     |
 | `--transition-duration-fast` / `-normal` / `-slow`   | `duration-fast` `duration-normal` `duration-slow`      |
 
 Inter Variable is loaded from `@fontsource-variable/inter` and used as the first
-family in the `body` stack. `font-mono` uses the system UI monospace stack.
+family in the `body` stack (`font-sans`). `font-mono` uses the system UI
+monospace stack.
 
 ## Component registry
 
@@ -125,12 +148,84 @@ distributable JSON (into `public/r`) with:
 npm run registry:build
 ```
 
-Serve the app (or just `public/r`) over HTTP and others can install components
-directly:
+Vite copies `public/` to the site root, so hosting the app (or just `public/r`)
+serves `/r/registry.json` (the catalog) and `/r/<name>.json` (each item). CI
+fails if `public/r` drifts from a fresh build.
+
+Direct URL install still works:
 
 ```bash
 npx shadcn@latest add https://your-host/r/button.json
 ```
+
+### Install via namespaced registry
+
+Consumers that already have a shadcn `components.json` can alias this kit as
+`@relay`. Point `{name}` at the built item files:
+
+```json
+{
+  "registries": {
+    "@relay": "https://<host>/r/{name}.json"
+  }
+}
+```
+
+Then:
+
+```bash
+npx shadcn@latest add @relay/button
+```
+
+`{name}` is replaced with the item name (`button` → `/r/button.json`). Search
+and list use the same pattern with `registry` (`/r/registry.json`).
+
+### MCP
+
+The [shadcn MCP server](https://ui.shadcn.com/docs/mcp) reads `registries` from
+the project's `components.json` and can browse, search, and install from
+`@relay`. Add the server to the AI client, then configure the registry URL as
+above.
+
+Init (Claude Code example):
+
+```bash
+npx shadcn@latest mcp init --client claude
+```
+
+Or a project MCP config (Cursor: `.cursor/mcp.json`; Claude Code: `.mcp.json`):
+
+```json
+{
+  "mcpServers": {
+    "shadcn": {
+      "command": "npx",
+      "args": ["shadcn@latest", "mcp"]
+    }
+  }
+}
+```
+
+VS Code Copilot uses `.vscode/mcp.json` with a top-level `"servers"` key
+instead of `"mcpServers"`. After the server is connected, prompts like “show
+components from the @relay registry” or `npx shadcn@latest add @relay/button`
+resolve against this kit.
+
+## Quality
+
+| Check          | Command                                           |
+| -------------- | ------------------------------------------------- |
+| Format         | `npm run format` / `format:check` (Prettier)      |
+| Lint           | `npm run lint`                                    |
+| Types          | `npm run typecheck`                               |
+| Unit + axe     | `npm test` (vitest, jsdom)                        |
+| E2e + visual   | `npm run test:e2e` (Playwright; visual: Linux)    |
+| Token contrast | `npm run tokens:check` (WCAG)                     |
+| Bundle budget  | `npx size-limit` after `npm run build`            |
+| Registry drift | `npm run registry:build` then `git diff public/r` |
+
+Lint includes perfectionist import sort, jsx-a11y, a kit/app import boundary,
+and eslint-plugin-storybook.
 
 ## Storybook
 
