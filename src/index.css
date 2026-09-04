@@ -171,6 +171,10 @@
     @apply border-border;
   }
 
+  html {
+    scroll-padding-top: 5.5rem;
+  }
+
   html,
   body,
   #root {

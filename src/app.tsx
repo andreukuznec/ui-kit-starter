@@ -330,8 +330,8 @@ function App() {
                 </CardContent>
                 <CardFooter className="justify-between border-t pt-6">
                   <span className="text-xs text-muted-foreground">Compact by default</span>
-                  <Button variant="link" className="px-0">
-                    View tokens
+                  <Button variant="link" className="px-0" asChild>
+                    <a href="#tokens">View tokens</a>
                   </Button>
                 </CardFooter>
               </Card>
@@ -448,7 +448,7 @@ function App() {
                 </CardContent>
               </Card>
 
-              <Card>
+              <Card id="settings">
                 <CardHeader>
                   <CardTitle>Forms and validation</CardTitle>
                   <CardDescription>
@@ -602,10 +602,12 @@ function App() {
                     <DropdownMenuContent align="end">
                       <DropdownMenuLabel>Actions</DropdownMenuLabel>
                       <DropdownMenuSeparator />
-                      <DropdownMenuItem>
+                      <DropdownMenuItem onSelect={() => toast("Edit")}>
                         Edit<DropdownMenuShortcut>⌘E</DropdownMenuShortcut>
                       </DropdownMenuItem>
-                      <DropdownMenuItem>Duplicate</DropdownMenuItem>
+                      <DropdownMenuItem onSelect={() => toast("Duplicated")}>
+                        Duplicate
+                      </DropdownMenuItem>
                     </DropdownMenuContent>
                   </DropdownMenu>
                 </CardHeader>
@@ -684,7 +686,7 @@ function App() {
                 </CardContent>
               </Card>
 
-              <Card>
+              <Card id="tokens">
                 <CardHeader>
                   <CardTitle>Disclosure and loading</CardTitle>
                   <CardDescription>Calm hierarchy for dense application screens.</CardDescription>

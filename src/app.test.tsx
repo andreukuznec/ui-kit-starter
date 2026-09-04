@@ -1,6 +1,6 @@
 import { render, screen } from "@testing-library/react"
 import userEvent from "@testing-library/user-event"
-import { describe, expect, it } from "vitest"
+import { afterEach, describe, expect, it } from "vitest"
 import { axe } from "vitest-axe"
 
 import App from "@/app"
@@ -15,11 +15,14 @@ function renderApp() {
 }
 
 describe("App", () => {
+  afterEach(() => {
+    window.location.hash = ""
+  })
   it("renders the starter showcase", () => {
     renderApp()
 
     expect(screen.getByText("React component starter")).toBeInTheDocument()
-    expect(screen.getByRole("button", { name: "Overview" })).toBeInTheDocument()
+    expect(screen.getByRole("link", { name: "Overview" })).toBeInTheDocument()
     expect(
       screen.getByRole("heading", { name: /build with the relay visual system/i }),
     ).toBeInTheDocument()
@@ -51,6 +54,18 @@ describe("App", () => {
 
     expect(await screen.findByText("Project created")).toBeInTheDocument()
     expect(screen.getByRole("textbox", { name: "Project name" })).toHaveValue("")
+  })
+
+  it("navigates showcase sections from the sidebar", async () => {
+    const user = userEvent.setup()
+    renderApp()
+
+    const charts = screen.getByRole("link", { name: "Charts" })
+    await user.click(charts)
+
+    expect(charts).toHaveAttribute("aria-current", "page")
+    expect(screen.getByRole("link", { name: "Overview" })).not.toHaveAttribute("aria-current")
+    expect(screen.getByRole("heading", { name: "Charts" })).toBeInTheDocument()
   })
 
   it("has no accessibility violations", async () => {

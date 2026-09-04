@@ -34,6 +34,21 @@ test.describe("showcase", () => {
     await expect(page.getByRole("textbox", { name: "Project name" })).toHaveValue("")
   })
 
+  test("sidebar navigates to showcase sections", async ({ page }) => {
+    await page.goto("/")
+
+    await page.getByRole("link", { name: "Charts" }).click()
+    await expect(page.getByRole("heading", { name: "Charts" })).toBeInViewport()
+    await expect(page.getByRole("link", { name: "Charts" })).toHaveAttribute("aria-current", "page")
+
+    await page.getByRole("link", { name: "Settings" }).click()
+    await expect(page.getByRole("heading", { name: "Forms and validation" })).toBeInViewport()
+    await expect(page.getByRole("link", { name: "Settings" })).toHaveAttribute(
+      "aria-current",
+      "page",
+    )
+  })
+
   test("chart and table render", async ({ page }) => {
     await page.goto("/")
 

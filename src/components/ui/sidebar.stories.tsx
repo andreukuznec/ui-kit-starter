@@ -1,6 +1,7 @@
 import type { Meta, StoryObj } from "@storybook/react-vite"
 
 import { BarChart3, LayoutDashboard, Palette, Settings2 } from "lucide-react"
+import { useState } from "react"
 
 import {
   Sidebar,
@@ -34,6 +35,8 @@ export default meta
 type Story = StoryObj<typeof meta>
 
 function SidebarDemo({ defaultOpen = true }: { defaultOpen?: boolean }) {
+  const [active, setActive] = useState<(typeof nav)[number]["title"]>("Overview")
+
   return (
     <SidebarProvider defaultOpen={defaultOpen} className="min-h-[28rem] rounded-xl border">
       <Sidebar collapsible="icon">
@@ -48,7 +51,11 @@ function SidebarDemo({ defaultOpen = true }: { defaultOpen?: boolean }) {
               <SidebarMenu>
                 {nav.map((item) => (
                   <SidebarMenuItem key={item.title}>
-                    <SidebarMenuButton isActive={item.title === "Overview"} tooltip={item.title}>
+                    <SidebarMenuButton
+                      isActive={item.title === active}
+                      tooltip={item.title}
+                      onClick={() => setActive(item.title)}
+                    >
                       <item.icon />
                       <span>{item.title}</span>
                     </SidebarMenuButton>
@@ -63,7 +70,7 @@ function SidebarDemo({ defaultOpen = true }: { defaultOpen?: boolean }) {
       <SidebarInset>
         <header className="flex h-12 items-center gap-2 border-b px-3">
           <SidebarTrigger />
-          <span className="text-sm">Overview</span>
+          <span className="text-sm">{active}</span>
         </header>
         <div className="p-4 text-sm text-muted-foreground">
           Main content sits beside the sidebar.

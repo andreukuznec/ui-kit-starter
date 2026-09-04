@@ -24,7 +24,7 @@ const chartConfig = {
 
 export function ChartsCard() {
   return (
-    <Card>
+    <Card id="charts">
       <CardHeader>
         <CardTitle>Charts</CardTitle>
         <CardDescription>

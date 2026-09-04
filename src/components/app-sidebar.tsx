@@ -1,6 +1,5 @@
-import type { ComponentProps } from "react"
-
 import { BarChart3, LayoutDashboard, Palette, Settings2 } from "lucide-react"
+import { type ComponentProps, useEffect, useState } from "react"
 
 import {
   Sidebar,
@@ -13,14 +12,51 @@ import {
   SidebarMenuButton,
   SidebarMenuItem,
   SidebarRail,
+  useSidebar,
 } from "@/components/ui/sidebar"
 
 const nav = [
-  { title: "Overview", icon: LayoutDashboard },
-  { title: "Tokens", icon: Palette },
-  { title: "Charts", icon: BarChart3 },
-  { title: "Settings", icon: Settings2 },
+  { title: "Overview", icon: LayoutDashboard, href: "#showcase" },
+  { title: "Tokens", icon: Palette, href: "#tokens" },
+  { title: "Charts", icon: BarChart3, href: "#charts" },
+  { title: "Settings", icon: Settings2, href: "#settings" },
 ] as const
+
+function ShowcaseNav() {
+  const { setOpenMobile } = useSidebar()
+  const [activeHref, setActiveHref] = useState(() => window.location.hash || "#showcase")
+
+  useEffect(() => {
+    const sync = () => setActiveHref(window.location.hash || "#showcase")
+    window.addEventListener("hashchange", sync)
+    return () => window.removeEventListener("hashchange", sync)
+  }, [])
+
+  return (
+    <SidebarMenu aria-label="Showcase">
+      {nav.map((item) => {
+        const isActive = activeHref === item.href
+        return (
+          <SidebarMenuItem key={item.title}>
+            <SidebarMenuButton asChild isActive={isActive} tooltip={item.title}>
+              <a
+                href={item.href}
+                aria-current={isActive ? "page" : undefined}
+                onClick={() => {
+                  setActiveHref(item.href)
+                  setOpenMobile(false)
+                }}
+              >
+                <item.icon />
+                <span>{item.title}</span>
+              </a>
+            </SidebarMenuButton>
+          </SidebarMenuItem>
+        )
+      })}
+    </SidebarMenu>
+  )
+}
 
 export function AppSidebar(props: ComponentProps<typeof Sidebar>) {
   return (
@@ -33,16 +69,7 @@ export function AppSidebar(props: ComponentProps<typeof Sidebar>) {
         <SidebarGroup>
           <SidebarGroupLabel>Showcase</SidebarGroupLabel>
           <SidebarGroupContent>
-            <SidebarMenu>
-              {nav.map((item) => (
-                <SidebarMenuItem key={item.title}>
-                  <SidebarMenuButton isActive={item.title === "Overview"} tooltip={item.title}>
-                    <item.icon />
-                    <span>{item.title}</span>
-                  </SidebarMenuButton>
-                </SidebarMenuItem>
-              ))}
-            </SidebarMenu>
+            <ShowcaseNav />
           </SidebarGroupContent>
         </SidebarGroup>
       </SidebarContent>
